@@ -14,6 +14,7 @@ const routes = [
     children: [
       { path: '', component: HomeView },
       { path: 'about', component: AboutView },
+      { path: 'profile', component: ProfileView },
     ],
   },
   {
@@ -23,7 +24,6 @@ const routes = [
       { path: '', redirect: '/login' },
       { path: 'login', component: LoginView },
       { path: 'register', component: RegisterView },
-      { path: 'profile', component: ProfileView },
     ],
   },
 ]
