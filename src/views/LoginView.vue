@@ -1,0 +1,25 @@
+<template>
+  <div>
+    <h2>Login</h2>
+    <input v-model="email" placeholder="Email" />
+    <input v-model="password" placeholder="Password" type="password" />
+    <button @click="handleLogin">Login</button>
+  </div>
+</template>
+
+<script setup>
+import { ref } from 'vue';
+import { useAuthStore } from '../stores/auth';
+import { useRouter } from 'vue-router';
+
+const email = ref('');
+const password = ref('');
+const auth = useAuthStore();
+const router = useRouter();
+
+const handleLogin = async () => {
+  await auth.login(email.value, password.value);
+  await auth.fetchUser();
+  router.push('/profile');
+};
+</script>
