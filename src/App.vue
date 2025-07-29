@@ -1,15 +1,9 @@
+<script setup lang="ts"></script>
+
 <template>
-  <router-view />
+  <h1 className="text-3xl font-bold underline text-red-600">
+    Hello world!
+  </h1>
 </template>
 
-<script setup lang="ts">
-// Boş, çünkü sadece router içeriği gösterilecek
-</script>
-
-<style>
-/* Basit stil */
-body {
-  font-family: Arial, sans-serif;
-  margin: 2rem;
-}
-</style>
+<style scoped></style>
