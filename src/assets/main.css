@@ -1,6 +1,7 @@
 /* src/assets/main.css */
 
 @import './style.css';
+@import 'flatpickr/dist/flatpickr.min.css';
 
 @tailwind base;
 @tailwind components;
