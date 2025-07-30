@@ -5,7 +5,7 @@
         <nav class="flex mb-5" aria-label="Breadcrumb">
           <ol class="inline-flex items-center space-x-1 md:space-x-2">
             <li class="inline-flex items-center">
-              <a href="./index.html"
+              <router-link to="/"
                 class="text-gray-700 hover:text-gray-900 dark:text-gray-500 dark:hover:text-gray-600 inline-flex items-center">
                 <svg class="w-5 h-5 mr-2.5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                   <path
@@ -13,7 +13,7 @@
                   </path>
                 </svg>
                 Anasayfa
-              </a>
+              </router-link>
             </li>
             <li>
               <div class="flex items-center">
@@ -63,7 +63,7 @@
             <h1 class="text-lg">Güvenlik</h1>
             <p class="text-gray-600 dark:text-gray-400 mt-2">İkili doğrulama sistem ayarlarınızı buradan
               yönetebilirsiniz.</p>
-            <div class="mt-4 flex justify-between">
+            <div class="mt-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-4">
               <label class="flex items-center space-x-3 cursor-pointer">
                 <div class="relative">
                   <input type="checkbox" class="sr-only peer dark:text-black" checked>
@@ -106,7 +106,7 @@
           <div class="bg-white dark:bg-gray-800 shadow-md p-5 rounded-lg">
             <h1 class="text-lg">Bildirim</h1>
             <p class="text-gray-600 dark:text-gray-400 mt-2">Bildirim ayarlarınızı buradan yönetebilirsiniz.</p>
-            <div class="mt-4 flex justify-between">
+            <div class="mt-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-4">
               <label class="flex items-center space-x-3 cursor-pointer">
                 <div class="relative">
                   <input type="checkbox" class="sr-only peer dark:text-black" checked>

@@ -4,8 +4,8 @@
     <nav class="flex mb-5" aria-label="Breadcrumb">
       <ol class="inline-flex items-center space-x-1 md:space-x-2">
         <li class="inline-flex items-center">
-          <a
-            href="./index.html"
+          <router-link
+            to="/"
             class="text-gray-700 hover:text-gray-900 dark:text-gray-500 dark:hover:text-gray-600 inline-flex items-center"
           >
             <svg
@@ -19,7 +19,7 @@
               ></path>
             </svg>
             Anasayfa
-          </a>
+          </router-link>
         </li>
       </ol>
     </nav>
@@ -183,7 +183,7 @@
           </form>
         </div>
         <div class="bg-white dark:bg-gray-800 shadow-md p-5 rounded-lg col-span-1 md:col-span-2 lg:col-span-2 lg:col-start-3 overflow-x-auto">
-          <table class="items-center min-w-full bg-transparent border-collapse">
+          <table class="items-center w-full bg-transparent border-collapse">
             <thead>
               <tr>
                 <th

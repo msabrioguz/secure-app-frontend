@@ -5,8 +5,8 @@
     <nav class="flex mb-5" aria-label="Breadcrumb">
       <ol class="inline-flex items-center space-x-1 md:space-x-2">
         <li class="inline-flex items-center">
-          <a
-            href="./index.html"
+          <router-link
+            to="/"
             class="text-gray-700 hover:text-gray-900 dark:text-gray-500 dark:hover:text-gray-600 inline-flex items-center"
           >
             <svg
@@ -20,7 +20,7 @@
               ></path>
             </svg>
             Anasayfa
-          </a>
+          </router-link>
         </li>
         <li>
           <div class="flex items-center">

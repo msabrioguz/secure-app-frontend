@@ -5,8 +5,8 @@
     <nav class="flex mb-5" aria-label="Breadcrumb">
       <ol class="inline-flex items-center space-x-1 md:space-x-2">
         <li class="inline-flex items-center">
-          <a
-            href="./index.html"
+          <router-link
+            to="/"
             class="text-gray-700 hover:text-gray-900 dark:text-gray-500 dark:hover:text-gray-600 inline-flex items-center"
           >
             <svg
@@ -20,7 +20,7 @@
               ></path>
             </svg>
             Anasayfa
-          </a>
+          </router-link>
         </li>
         <li>
           <div class="flex items-center">
@@ -45,7 +45,7 @@
         </li>
       </ol>
     </nav>
-    <div class="bg-white dark:bg-gray-800 shadow-md p-5 rounded-lg mb-6">
+    <div class="bg-white dark:bg-gray-800 shadow-md p-5 rounded-lg mb-6 overflow-x-auto">
       <div class="flex justify-between mb-3">
         <button class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600">
           Not Ekle <i class="fas fa-plus ml-2"></i>
