@@ -1,17 +1,21 @@
 <template>
   <!-- Overlay -->
-  <div class="fixed inset-0 bg-black bg-opacity-50 z-40 md:hidden" x-transition:enter="transition ease-out duration-200"
+  <div v-if="sidebarOpen.isOpen" class="fixed inset-0 bg-black bg-opacity-50 z-40 md:hidden" x-transition:enter="transition ease-out duration-200"
     x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
     x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100"
-    x-transition:leave-end="opacity-0">
+    x-transition:leave-end="opacity-0" @click="sidebarOpen.close">
   </div>
 
   <!-- Sidebar -->
   <aside
-    class="fixed inset-y-0 left-0 z-50 w-64 bg-gray-300 dark:bg-gray-800 transform transition-transform duration-300 ease-in-out md:translate-x-0">
+    :class="[
+      'fixed inset-y-0 left-0 z-50 w-64 bg-gray-300 dark:bg-gray-800 transform transition-transform duration-300 ease-in-out',
+      sidebarOpen.isOpen ? 'translate-x-0' : '-translate-x-full',
+      'md:translate-x-0'
+    ]">
     <div class="flex items-center justify-between h-16 px-4 bg-gray-100 dark:bg-gray-900">
-      <span class="text-gray-600 dark:text-white text-lg font-bold">Superadmin</span>
-      <button @click="sidebarOpen = false" class="text-white md:hidden" aria-label="Close sidebar">
+      <span class="text-gray-600 dark:text-white text-lg font-bold">MsoApp</span>
+      <button @click="sidebarOpen.close" class="text-black dark:text-white md:hidden" aria-label="Close sidebar">
         <i class="fas fa-times"></i>
       </button>
     </div>
@@ -36,18 +40,19 @@
           <i class="fas fa-cog mr-3"></i>Ayarlar
         </div>
       </router-link>
-      <a href="#"
+      <router-link to="user/logout"
         class="flex items-center px-4 py-2 text-gray-600 hover:bg-gray-400 dark:text-gray-100 dark:hover:bg-gray-700">
         <i class="fas fa-sign-out-alt mr-3"></i>Çıkış Yap
-      </a>
+      </router-link>
     </nav>
   </aside>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { useSidebarStore } from '@/stores/sidebar';
 
-const sidebarOpen = ref(false);
+const sidebarOpen = useSidebarStore();
+
 </script>
 
 <style scoped></style>

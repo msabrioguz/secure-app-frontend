@@ -1,13 +1,13 @@
 <template>
   <header
     class="bg-white dark:bg-gray-800 dark:text-white shadow-sm h-16 flex items-center justify-between px-4 fixed top-0 right-0 left-0 md:left-64 z-30">
-    <button @click="sidebarOpen = true" class="text-gray-500 dark:text-white md:hidden" aria-label="Open sidebar">
+    <button @click="sidebarOpen.toggle" class="text-gray-500 dark:text-white md:hidden" aria-label="Open sidebar">
       <i class="fas fa-bars text-2xl"></i>
     </button>
     <div></div>
     <div class="flex items-center">
       <div class="mr-5">
-        <button id="theme-toggle" class="h-10 w-10 rounded-lg p-2 hover:bg-gray-100 dark:hover:bg-gray-700">
+        <button id="theme-toggle" class="h-10 w-10 rounded-lg p-2 hover:bg-gray-100 dark:hover:bg-gray-700" @click="isDark = !isDark">
           <svg class="fill-violet-700 block dark:hidden" fill="currentColor" viewBox="0 0 20 20">
             <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
           </svg>
@@ -38,10 +38,24 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { useSidebarStore } from '@/stores/sidebar';
+import { ref, onMounted, watch } from 'vue';
 
+const sidebarOpen = useSidebarStore();
+const isDark = ref(false);
 
-const sidebarOpen = ref(false);
+// İlk açılışta localStorage kontrolü
+onMounted(() => {
+  const savedTheme = localStorage.getItem('theme')
+  isDark.value = savedTheme === 'dark'
+  document.documentElement.classList.toggle('dark', isDark.value)
+})
+
+// Kullanıcı tema değiştirince class ve localStorage güncelle
+watch(isDark, (val) => {
+  document.documentElement.classList.toggle('dark', val)
+  localStorage.setItem('theme', val ? 'dark' : 'light')
+})
 </script>
 
 <style scoped></style>

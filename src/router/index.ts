@@ -16,12 +16,12 @@ const routes = [
     path: '/',
     component: DefaultLayout,
     children: [
-      { path: '', component: HomeView },
-      { path: 'about', component: AboutView },
-      { path: 'profile', component: ProfileView },
-      { path: 'notes', component: NotesView },
-      { path: 'users', component: UsersView },
-      { path: 'settings', component: SettingsView },
+      { path: '', name: 'Home', component: HomeView, meta: { title: 'Anasayfa' } },
+      { path: 'about', name: 'About', component: AboutView, meta: { title: 'Hakkımda'} },
+      { path: 'profile', name: 'Profile', component: ProfileView, meta: { title: 'Profil' } },
+      { path: 'notes', name: 'Notes', component: NotesView, meta: { title: 'Notlar' } },
+      { path: 'users', name: 'Users', component: UsersView, meta: { title: 'Kullanıcılar' } },
+      { path: 'settings', name: 'Settings', component: SettingsView, meta: { title: 'Ayarlar' } },
     ],
   },
   {
@@ -29,9 +29,9 @@ const routes = [
     component: BlankLayout,
     children: [
       { path: '', redirect: '/login' },
-      { path: 'login', component: LoginView },
-      { path: 'register', component: RegisterView },
-      { path: 'logout', component: LogoutView },
+      { path: 'login', name: 'Login', component: LoginView, meta: { title: 'Giriş Yap' } },
+      { path: 'register', name: 'Register', component: RegisterView, meta: { title: 'Kayıt Ol' } },
+      { path: 'logout', name:'Logout', component: LogoutView },
     ],
   },
 ]
@@ -39,6 +39,15 @@ const routes = [
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes,
+})
+
+router.afterEach((to) => {
+  const defaultTitle = 'MsoApp'
+  if (!to.meta?.title) {
+    document.title = defaultTitle
+  }else{
+    document.title = to.meta.title + ' - ' + defaultTitle || defaultTitle
+  }
 })
 
 export default router

@@ -9,8 +9,8 @@
 </template>
 
 <script setup lang="ts">
-import HeaderComponents from '@/components/HeaderComponents.vue';
-import SidebarComponents from '@/components/SidebarComponents.vue';
+import HeaderComponents from '@/components/HeaderComponent.vue';
+import SidebarComponents from '@/components/SidebarComponent.vue';
 
 
 
