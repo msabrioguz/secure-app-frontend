@@ -29,8 +29,8 @@
           <i class="fas fa-bell"></i>
         </button>
         <div class="w-8 h-8 rounded-full bg-gray-300" role="img" aria-label="User avatar">
-          <a href="./profile.html"><img src="https://placebeard.it/320/320" alt="User Avatar"
-              class="w-full h-full rounded-full"></a>
+          <router-link to="/profile"><img src="https://placebeard.it/320/320" alt="User Avatar"
+              class="w-full h-full rounded-full"></router-link>
         </div>
       </div>
     </div>

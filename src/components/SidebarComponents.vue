@@ -16,33 +16,29 @@
       </button>
     </div>
     <nav class="mt-5 overflow-y-auto h-[calc(100vh-4rem)]">
-      <a href="./index.html"
+      <router-link to="/"
         class="flex items-center px-4 py-2 text-gray-600 bg-gray-300 hover:bg-gray-400 dark:text-gray-100 dark:hover:bg-gray-700 dark:bg-gray-800">
         <i class="fas fa-tachometer-alt mr-3"></i>Anasayfa
-      </a>
-      <a href="./notes.html"
+      </router-link>
+      <router-link to="/notes"
         class="flex items-center px-4 py-2 text-gray-600 hover:bg-gray-400 dark:text-gray-100 dark:hover:bg-gray-700">
         <i class="fas fa-sticky-note mr-3"></i>Notlar
-      </a>
-      <a href="./users.html"
+      </router-link>
+      <router-link to="/users"
         class="w-full flex items-center justify-between px-4 py-2 text-gray-600 bg-gray-300 hover:bg-gray-400 dark:text-gray-100 dark:hover:bg-gray-700 dark:bg-gray-800">
         <div class="flex items-center">
           <i class="fas fa-users mr-3"></i>Kullanıcılar
         </div>
-      </a>
-      <a href="./settings.html"
+      </router-link>
+      <router-link to="/settings"
         class="w-full flex items-center justify-between px-4 py-2 text-gray-600 bg-gray-300 hover:bg-gray-400 dark:text-gray-100 dark:hover:bg-gray-700 dark:bg-gray-800">
         <div class="flex items-center">
           <i class="fas fa-cog mr-3"></i>Ayarlar
         </div>
-      </a>
+      </router-link>
       <a href="#"
         class="flex items-center px-4 py-2 text-gray-600 hover:bg-gray-400 dark:text-gray-100 dark:hover:bg-gray-700">
         <i class="fas fa-sign-out-alt mr-3"></i>Çıkış Yap
-      </a>
-      <a href="../../index.html"
-        class="flex items-center px-4 py-2 text-gray-600 hover:bg-gray-400 dark:text-gray-100 dark:hover:bg-gray-700">
-        <i class="fas fa-arrow-left mr-3"></i>Ana Sayfaya Dön
       </a>
     </nav>
   </aside>
