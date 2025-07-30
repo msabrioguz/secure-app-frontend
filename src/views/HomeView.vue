@@ -71,7 +71,7 @@
             </div>
           </div>
         </div>
-        <div class="bg-white dark:bg-gray-800 shadow-md p-5 rounded-lg col-span-2">
+        <div class="bg-white dark:bg-gray-800 shadow-md p-5 rounded-lg col-span-1 md:col-span-2 lg:col-span-2">
           <h1 class="text-xl">Hızlı Not</h1>
           <p class="text-gray-600 dark:text-gray-400 mb-4">Notlarınızı hızlıca ekleyin.</p>
           <form class="mb-4">
@@ -182,8 +182,8 @@
             </div>
           </form>
         </div>
-        <div class="bg-white dark:bg-gray-800 shadow-md p-5 rounded-lg col-span-2 col-start-3">
-          <table class="items-center w-full bg-transparent border-collapse">
+        <div class="bg-white dark:bg-gray-800 shadow-md p-5 rounded-lg col-span-1 md:col-span-2 lg:col-span-2 lg:col-start-3 overflow-x-auto">
+          <table class="items-center min-w-full bg-transparent border-collapse">
             <thead>
               <tr>
                 <th
@@ -368,6 +368,7 @@
         </div>
       </div>
     </div>
+
   </main>
 </template>
 
