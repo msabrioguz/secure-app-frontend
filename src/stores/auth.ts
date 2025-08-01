@@ -1,7 +1,7 @@
 // src/stores/auth.ts
 
 import { defineStore } from 'pinia'
-import axios from 'axios'
+import api from '@/plugins/axios'
 
 // User interface tanımı
 interface User {
@@ -25,17 +25,19 @@ export const useAuthStore = defineStore('auth', {
       interface LoginResponse {
         access_token: string
       }
-      const res = await axios.post<LoginResponse>('http://localhost:3000/auth/login', { email, password })
+      const res = await api.post<LoginResponse>('http://localhost:3000/auth/login', { email, password })
       this.token = res.data.access_token
       localStorage.setItem('token', this.token)
+
+      await this.fetchUser() // Kullanıcı bilgilerini al
     },
 
     async register(email: string, password: string): Promise<void> {
-      await axios.post('http://localhost:3000/auth/register', { email, password })
+      await api.post('http://localhost:3000/auth/register', { email, password })
     },
 
     async fetchUser(): Promise<void> {
-      const res = await axios.get('http://localhost:3000/users/me', {
+      const res = await api.get('http://localhost:3000/users/me', {
         headers: {
           Authorization: `Bearer ${this.token}`,
         },

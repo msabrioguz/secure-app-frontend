@@ -87,14 +87,15 @@
 <script setup lang="ts">
 import { useForm, useField } from 'vee-validate';
 import * as yup from 'yup';
-import axios from 'axios';
 import { useRouter } from 'vue-router';
 import { ref } from 'vue';
 import { useToast } from '@/composables/useToast';
+import { useAuthStore } from '@/stores/auth';
 
 const router = useRouter();
 const loginError = ref('');
 const showToast = useToast();
+const auth = useAuthStore();
 
 const schema = yup.object({
   email: yup.string().email('Geçerli bir e-posta adresi girin').required('E-posta gerekli'),
@@ -108,17 +109,20 @@ const { handleSubmit, errors, isSubmitting } = useForm({
 const { value: email } = useField('email');
 const { value: password } = useField('password');
 
+
 const onSubmit = handleSubmit(async (formValues) => {
   loginError.value = '';
   try {
     await new Promise((resolve) => setTimeout(resolve, 1000)); // 3 saniye gecikme
-    const response = await axios.post('http://localhost:3000/auth/login', formValues);
-    localStorage.setItem('token', response.data.access_token);
+    await auth.login(formValues.email, formValues.password);
+    const user = auth.user;
+    console.log('Giriş başarılı:', user);
+    showToast('Giriş başarılı!', 'success');
     router.push('/'); // Başarılı giriş sonrası yönlendirme
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (err: any) {
     loginError.value = err.response?.data?.message || 'Giriş başarısız. Lütfen tekrar deneyin.';
-    console.error('Login error:', err);
+    // console.error('Login error:', err);
     showToast(loginError.value, 'error');
   }
 });
