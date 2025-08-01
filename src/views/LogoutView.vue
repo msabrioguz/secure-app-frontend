@@ -19,7 +19,11 @@
 </template>
 
 <script setup lang="ts">
+import { useAuthStore } from '@/stores/auth';
 
+
+const auth = useAuthStore();
+auth.logout(); // Oturumu kapatmak için auth store'daki logout metodunu çağ
 </script>
 
 <style scoped>

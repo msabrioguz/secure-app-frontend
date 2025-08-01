@@ -278,7 +278,7 @@
           ></textarea>
           <div class="flex justify-between my-4">
             <div>
-              <lable class="text-sm">Periyot Tarihi</lable> <br />
+              <label class="text-sm">Periyot Tarihi</label> <br />
               <input
                 id="datepicker"
                 class="border border-gray-300 rounded px-3 py-2 w-56 dark:text-white dark:bg-gray-700"
