@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { useAuthStore } from '@/stores/auth'
-import { useRouter } from 'vue-router'
+// import { useRouter } from 'vue-router'
 
 // Axios örneği oluştur
 const api = axios.create({
@@ -24,15 +24,14 @@ api.interceptors.request.use(
 // Response interceptor: istek cevabı geldiğinde çalışır (opsiyonel)
 api.interceptors.response.use(
   (response) => response,
-  (error) => {
-    const auth = useAuthStore();
-    const router = useRouter();
-
-    if (error.response && error.response?.status === 401) {
-      auth.logout()
-      // Giriş sayfasına yönlendirme veya kullanıcıya mesaj gösterme
-      console.error('Unauthorized access - logging out');
-      router.push('/user/login');
+  async (error) => {
+    const originalRequest = error.config;
+    if(error.response?.status === 401 && !originalRequest._retry) {
+      originalRequest._retry = true;
+      const auth = useAuthStore();
+      await auth.refreshToken();
+      originalRequest.headers.Authorization = `Bearer ${auth.token}`;
+      return api(originalRequest);
     }
     return Promise.reject(error)
   }
