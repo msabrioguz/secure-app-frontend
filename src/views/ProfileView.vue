@@ -70,7 +70,7 @@
               placeholder="+90 555 555 55 55">
           </div>
           <div>
-            <lable class="text-sm">Doğum Tarihi</lable> <br>
+            <label class="text-sm">Doğum Tarihi</label> <br>
             <input id="datepicker"
               class="border border-gray-300 rounded w-full px-3 py-2 dark:text-white dark:bg-gray-700" type="text"
               placeholder="01.01.1995" />
@@ -86,7 +86,51 @@
 </template>
 
 <script setup lang="ts">
+import flatpickr from 'flatpickr'
+import { onMounted } from 'vue';
 
+onMounted(() => {
+  flatpickr('#datepicker', {
+    dateFormat: 'd.m.Y',
+    locale: {
+      firstDayOfWeek: 1, // Pazartesi
+      weekdays: {
+        shorthand: ['Pzt', 'Sal', 'Çar', 'Per', 'Cum', 'Cmt', 'Paz'],
+        longhand: ['Pazartesi', 'Salı', 'Çarşamba', 'Perşembe', 'Cuma', 'Cumartesi', 'Pazar'],
+      },
+      months: {
+        shorthand: [
+          'Oca',
+          'Şub',
+          'Mar',
+          'Nis',
+          'May',
+          'Haz',
+          'Tem',
+          'Ağu',
+          'Eyl',
+          'Eki',
+          'Kas',
+          'Ara',
+        ],
+        longhand: [
+          'Ocak',
+          'Şubat',
+          'Mart',
+          'Nisan',
+          'Mayıs',
+          'Haziran',
+          'Temmuz',
+          'Ağustos',
+          'Eylül',
+          'Ekim',
+          'Kasım',
+          'Aralık',
+        ],
+      },
+    },
+  })
+});
 </script>
 
 <style scoped></style>
