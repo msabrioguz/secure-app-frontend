@@ -2,6 +2,8 @@
 
 import { defineStore } from 'pinia';
 import api from '@/plugins/axios';
+import type { GenericObject } from 'vee-validate';
+import type { AxiosResponse } from 'axios';
 
 // User interface tanımı
 interface User {
@@ -54,8 +56,10 @@ export const useAuthStore = defineStore('auth', {
       }
     },
 
-    async register(email: string, password: string): Promise<void> {
-      await api.post('http://localhost:3000/auth/register', { email, password });
+    async register(values: GenericObject): Promise<AxiosResponse> {
+      console.log(values);
+      const response = await api.post('/auth/register', { ...values });
+      return response;
     },
 
     async fetchUser(): Promise<void> {

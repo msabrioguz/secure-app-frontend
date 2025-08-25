@@ -97,13 +97,15 @@
 
 <script setup lang="ts">
 import { useRouter } from 'vue-router';
-import axios from 'axios';
+// import axios from 'axios';
 import * as yup from 'yup';
 import { useForm, useField } from 'vee-validate';
 import { useToast } from '@/composables/useToast';
+import { useAuthStore } from '@/stores/auth';
 
 const router = useRouter();
 const showToast = useToast();
+const auth = useAuthStore();
 
 // Yup doğrulama şeması
 const schema = yup.object({
@@ -137,8 +139,10 @@ const { value: passwordAgain } = useField('passwordAgain');
 const onSubmit = handleSubmit(async (values) => {
   try {
     await new Promise((resolve) => setTimeout(resolve, 1000)); // 3 saniye gecikme
-    const response = await axios.post('http://localhost:3000/auth/register', values);
+    const response = await auth.register(values);
+    // const response = await axios.post('http://localhost:3000/auth/register', values);
     showToast('Kayıt başarılı! Lütfen giriş yapın.', 'success');
+    console.log('Kayıt başarılı:', response);
     if (response.status === 201) {
       router.push('/user/login');
     }
