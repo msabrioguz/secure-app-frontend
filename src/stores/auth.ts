@@ -16,9 +16,11 @@ interface User {
 export const useAuthStore = defineStore('auth', {
   state: (): {
     token: string;
+    refreshToken: string;
     user: User | null;
   } => ({
     token: localStorage.getItem('token') || '',
+    refreshToken: localStorage.getItem('refreshToken') || '',
     user: null,
   }),
 
@@ -33,6 +35,7 @@ export const useAuthStore = defineStore('auth', {
         password,
       });
       this.token = res.data.access_token;
+      this.refreshToken = res.data.refresh_token;
       localStorage.setItem('token', this.token);
       localStorage.setItem('refreshToken', res.data.refresh_token);
 
@@ -46,9 +49,18 @@ export const useAuthStore = defineStore('auth', {
       }
 
       try {
-        const res = await api.post('http://localhost:3000/auth/refresh', { refreshToken });
+        const res = await api.post(
+          'http://localhost:3000/auth/refresh',
+          { refreshToken: refreshToken },
+          {
+            headers: {
+              Authorization: `Bearer ${this.refreshToken}`,
+            },
+          },
+        );
         this.token = res.data.access_token;
         localStorage.setItem('token', res.data.access_token);
+        localStorage.setItem('refreshToken', res.data.refresh_token);
       } catch (err) {
         console.error('Token refresh failed:', err);
         // Eğer token yenileme başarısız olursa, kullanıcıyı çıkış yaptır
@@ -73,11 +85,15 @@ export const useAuthStore = defineStore('auth', {
 
     logout(): void {
       api
-        .post('http://localhost:3000/auth/logout', {}, {
-          headers: {
-            Authorization: `Bearer ${this.token}`,
+        .post(
+          'http://localhost:3000/auth/logout',
+          {},
+          {
+            headers: {
+              Authorization: `Bearer ${this.token}`,
+            },
           },
-        })
+        )
         .then(() => {
           this.token = '';
           this.user = null;

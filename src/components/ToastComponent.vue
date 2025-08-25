@@ -3,11 +3,11 @@
     <div
       v-if="visible"
       :class="[
-        'fixed bottom-5 right-5 z-50 px-4 py-2 rounded shadow-lg text-white',
+        'max-w-96 fixed bottom-5 right-5 z-50 px-4 py-2 rounded shadow-lg text-white',
         type === 'success' ? 'bg-green-500' : 'bg-red-500',
       ]"
     >
-      {{ message }}
+      <p v-for="(msg, index) in message" :key="index">{{ msg }}</p>
     </div>
   </transition>
 </template>
@@ -17,7 +17,7 @@ import { onMounted, ref } from 'vue';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const props = defineProps({
-  message: String,
+  message: Array,
   type: {
     type: String,
     default: 'success', // or 'error'

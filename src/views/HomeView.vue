@@ -34,7 +34,7 @@
             <i class="fas fa-users text-blue-500 text-2xl mr-4"></i>
             <div>
               <p class="text-gray-500 dark:text-gray-200">Toplam Kullanıcılar</p>
-              <h3 class="text-xl font-bold dark:text-white">1,234</h3>
+              <h3 class="text-xl font-bold dark:text-white">{{ userCount }}</h3>
             </div>
           </div>
         </div>
@@ -373,8 +373,9 @@
 </template>
 
 <script setup lang="ts">
+import { useUserStore } from '@/stores/user';
 import flatpickr from 'flatpickr'
-import { onMounted } from 'vue'
+import { onMounted, ref } from 'vue'
 
 onMounted(() => {
   flatpickr('#datepicker', {
@@ -418,6 +419,13 @@ onMounted(() => {
     },
   })
 })
+
+const userCount = ref(0);
+const userStore = useUserStore();
+
+userStore.getUserCount().then((count) => {
+  userCount.value = count;
+});
 </script>
 
 <style scoped></style>

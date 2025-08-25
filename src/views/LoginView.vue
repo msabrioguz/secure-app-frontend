@@ -117,13 +117,13 @@ const onSubmit = handleSubmit(async (formValues) => {
     await auth.login(formValues.email, formValues.password);
     const user = auth.user;
     console.log('Giriş başarılı:', user);
-    showToast('Giriş başarılı!', 'success');
+    showToast(['Giriş başarılı!'], 'success');
     router.push('/'); // Başarılı giriş sonrası yönlendirme
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (err: any) {
     loginError.value = err.response?.data?.message || 'Giriş başarısız. Lütfen tekrar deneyin.';
     // console.error('Login error:', err);
-    showToast(loginError.value, 'error');
+    showToast([loginError.value], 'error');
   }
 });
 </script>
