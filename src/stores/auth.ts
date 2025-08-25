@@ -68,10 +68,21 @@ export const useAuthStore = defineStore('auth', {
     },
 
     logout(): void {
-      this.token = '';
-      this.user = null;
-      localStorage.removeItem('token');
-      localStorage.removeItem('refreshToken');
+      api
+        .post('http://localhost:3000/auth/logout', {}, {
+          headers: {
+            Authorization: `Bearer ${this.token}`,
+          },
+        })
+        .then(() => {
+          this.token = '';
+          this.user = null;
+          localStorage.removeItem('token');
+          localStorage.removeItem('refreshToken');
+        })
+        .catch((err) => {
+          console.error('Logout failed:', err);
+        });
     },
   },
 });
