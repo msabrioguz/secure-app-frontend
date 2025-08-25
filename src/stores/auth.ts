@@ -35,7 +35,6 @@ export const useAuthStore = defineStore('auth', {
         password,
       });
       this.token = res.data.access_token;
-      this.refreshToken = res.data.refresh_token;
       localStorage.setItem('token', this.token);
       localStorage.setItem('refreshToken', res.data.refresh_token);
 
@@ -49,15 +48,9 @@ export const useAuthStore = defineStore('auth', {
       }
 
       try {
-        const res = await api.post(
-          'http://localhost:3000/auth/refresh',
-          { refreshToken: refreshToken },
-          {
-            headers: {
-              Authorization: `Bearer ${this.refreshToken}`,
-            },
-          },
-        );
+        const res = await api.post('http://localhost:3000/auth/refresh', {
+          refreshToken: refreshToken,
+        });
         this.token = res.data.access_token;
         localStorage.setItem('token', res.data.access_token);
         localStorage.setItem('refreshToken', res.data.refresh_token);

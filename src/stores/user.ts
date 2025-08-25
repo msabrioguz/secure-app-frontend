@@ -22,11 +22,7 @@ export const useUserStore = defineStore('user', {
 
   actions: {
     async getUserCount(): Promise<number> {
-      const res = await api.get('http://localhost:3000/users/GetUserCount', {
-        headers: {
-          Authorization: `Bearer ${this.token}`,
-        },
-      });
+      const res = await api.get('http://localhost:3000/users/GetUserCount');
       return res.data;
     },
   },
