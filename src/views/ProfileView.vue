@@ -67,7 +67,7 @@
               </div>
             </div>
           </div>
-          <h3 class="text-lg font-semibold text-gray-800 dark:text-white">Mustafa Oğuz</h3>
+          <h3 class="text-lg font-semibold text-gray-800 dark:text-white">{{ name + ' ' + surName }}</h3>
         </div>
       </div>
       <form class="space-y-6" @submit.prevent="onSubmit">
@@ -171,6 +171,10 @@ userStore.fetchUser().then(() => {
     surName.value = userStore.user.surname;
     email.value = userStore.user.email;
     role.value = userStore.user.role == 'user' ? 'Kullanıcı' : 'Yönetici';
+    phone.value = userStore.user.phoneNumber || '';
+    birthdate.value = userStore.user.birthDate
+      ? new Date(userStore.user.birthDate).toLocaleDateString('tr-TR')
+      : '';
   }
 });
 
