@@ -7,7 +7,7 @@
         type === 'success' ? 'bg-green-500' : 'bg-red-500',
       ]"
     >
-      <p v-for="(msg, index) in message" :key="index">{{ msg }}</p>
+        <p>{{ message }}</p>
     </div>
   </transition>
 </template>
@@ -17,7 +17,7 @@ import { onMounted, ref } from 'vue';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const props = defineProps({
-  message: Array,
+  message: String,
   type: {
     type: String,
     default: 'success', // or 'error'

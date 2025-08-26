@@ -7,6 +7,7 @@ import api from '@/plugins/axios';
 interface User {
   id: number;
   name: string;
+  surname: string;
   email: string;
   role?: string;
 }
@@ -24,6 +25,16 @@ export const useUserStore = defineStore('user', {
     async getUserCount(): Promise<number> {
       const res = await api.get('http://localhost:3000/users/GetUserCount');
       return res.data;
+    },
+
+    async fetchUser(): Promise<void> {
+      try {
+        const res = await api.get<User>('http://localhost:3000/users/GetProfile');
+        this.user = res.data;
+      } catch (error) {
+        console.error('Failed to fetch user profile:', error);
+        this.user = null;
+      }
     },
   },
 });

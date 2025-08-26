@@ -52,28 +52,33 @@
           <div>
             <label for="name" class="block text-gray-700 dark:text-gray-300 mb-2">Adınız</label>
             <input type="text" id="name" class="w-full p-2 border rounded dark:bg-gray-700 dark:text-white"
-              placeholder="Mustafa">
+              :placeholder="name" disabled>
           </div>
           <div>
             <label for="surName" class="block text-gray-700 dark:text-gray-300 mb-2">Soyadınız</label>
             <input type="text" id="surName" class="w-full p-2 border rounded dark:bg-gray-700 dark:text-white"
-              placeholder="Oğuz">
+              :placeholder="surName" disabled>
           </div>
           <div>
             <label for="email" class="block text-gray-700 dark:text-gray-300 mb-2">E-Posta</label>
             <input type="email" id="email" class="w-full p-2 border rounded dark:bg-gray-700 dark:text-white"
-              placeholder="mail@Eposta.com" disabled>
+              :placeholder="email" disabled>
           </div>
           <div>
-            <label for="phone" class="block text-gray-700 dark:text-gray-300 mb-2">E-Posta</label>
+            <label for="phone" class="block text-gray-700 dark:text-gray-300 mb-2">Telefon</label>
             <input type="tel" id="phone" class="w-full p-2 border rounded dark:bg-gray-700 dark:text-white"
               placeholder="+90 555 555 55 55">
           </div>
           <div>
-            <label class="text-sm">Doğum Tarihi</label> <br>
+            <label for="datepicker" class="block text-gray-700 dark:text-gray-300 mb-2">Doğum Tarihi</label>
             <input id="datepicker"
               class="border border-gray-300 rounded w-full px-3 py-2 dark:text-white dark:bg-gray-700" type="text"
               placeholder="01.01.1995" />
+          </div>
+          <div>
+            <label for="role" class="block text-gray-700 dark:text-gray-300 mb-2">Yetki</label>
+            <input type="text" id="role" class="w-full p-2 border rounded dark:bg-gray-700 dark:text-white"
+              :placeholder="role" disabled>
           </div>
           <div class="col-span-2 text-center">
             <button type="submit"
@@ -86,9 +91,24 @@
 </template>
 
 <script setup lang="ts">
+import { useUserStore } from '@/stores/user';
 import flatpickr from 'flatpickr'
-import { onMounted } from 'vue';
+import { onMounted, ref } from 'vue';
 
+const userStore = useUserStore();
+const name = ref('');
+const surName = ref('');
+const email = ref('');
+const role = ref('');
+
+userStore.fetchUser().then(() => {
+  if (userStore.user) {
+    name.value = userStore.user.name;
+    surName.value = userStore.user.surname;
+    email.value = userStore.user.email;
+    role.value = userStore.user.role == 'user' ? 'Kullanıcı' : 'Yönetici';
+  }
+});
 onMounted(() => {
   flatpickr('#datepicker', {
     dateFormat: 'd.m.Y',
