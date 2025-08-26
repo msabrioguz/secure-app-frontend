@@ -23,13 +23,13 @@ export const useUserStore = defineStore('user', {
 
   actions: {
     async getUserCount(): Promise<number> {
-      const res = await api.get('http://localhost:3000/users/GetUserCount');
+      const res = await api.get('/users/GetUserCount');
       return res.data;
     },
 
     async fetchUser(): Promise<void> {
       try {
-        const res = await api.get<User>('http://localhost:3000/users/GetProfile');
+        const res = await api.get<User>('/users/Profile');
         this.user = res.data;
       } catch (error) {
         console.error('Failed to fetch user profile:', error);

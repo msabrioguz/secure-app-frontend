@@ -30,7 +30,7 @@ export const useAuthStore = defineStore('auth', {
         access_token: string;
         refresh_token: string;
       }
-      const res = await api.post<LoginResponse>('http://localhost:3000/auth/login', {
+      const res = await api.post<LoginResponse>('/auth/login', {
         email,
         password,
       });
@@ -48,7 +48,7 @@ export const useAuthStore = defineStore('auth', {
       }
 
       try {
-        const res = await api.post('http://localhost:3000/auth/refresh', {
+        const res = await api.post('/auth/refresh', {
           refreshToken: refreshToken,
         });
         this.token = res.data.access_token;
@@ -68,7 +68,7 @@ export const useAuthStore = defineStore('auth', {
     },
 
     async fetchUser(): Promise<void> {
-      const res = await api.get('http://localhost:3000/users/me', {
+      const res = await api.get('/users/me', {
         headers: {
           Authorization: `Bearer ${this.token}`,
         },
@@ -79,7 +79,7 @@ export const useAuthStore = defineStore('auth', {
     logout(): void {
       api
         .post(
-          'http://localhost:3000/auth/logout',
+          '/auth/logout',
           {},
           {
             headers: {
