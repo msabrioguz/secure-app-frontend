@@ -29,9 +29,14 @@ api.interceptors.response.use(
     if (error.response?.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
       const auth = useAuthStore();
-      await auth.refreshToken();
-      originalRequest.headers.Authorization = `Bearer ${auth.token}`;
-      return api(originalRequest);
+      try {
+        await auth.refreshAccessToken(); // refreshToken fonksiyonunu yeni isimle çağırın
+        originalRequest.headers.Authorization = `Bearer ${auth.token}`;
+        return api(originalRequest);
+      } catch (refreshError) {
+        auth.logout(); // refresh başarısızsa çıkış yap
+        return Promise.reject(refreshError);
+      }
     }
     return Promise.reject(error);
   },

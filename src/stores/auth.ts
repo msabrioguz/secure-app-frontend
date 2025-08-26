@@ -41,7 +41,7 @@ export const useAuthStore = defineStore('auth', {
       await this.fetchUser(); // Kullanıcı bilgilerini al
     },
 
-    async refreshToken() {
+    async refreshAccessToken() {
       const refreshToken = localStorage.getItem('refreshToken');
       if (!refreshToken) {
         throw new Error('No refresh token found');
