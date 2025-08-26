@@ -10,6 +10,8 @@ interface User {
   surname: string;
   email: string;
   role?: string;
+  birthDate?: Date;
+  phoneNumber?: string;
 }
 
 export const useUserStore = defineStore('user', {
@@ -36,5 +38,18 @@ export const useUserStore = defineStore('user', {
         this.user = null;
       }
     },
+
+    async updateUserProfile(updatedData: Partial<User>): Promise<void> {
+      if (!this.user) {
+        throw new Error('No user is currently logged in.');
+      }
+      try {
+        const res = await api.patch<User>(`/users/Profile`, updatedData);
+        this.user = res.data;
+      } catch (error) {
+        console.error('Failed to update user profile:', error);
+        throw error;
+      }
+    }
   },
 });

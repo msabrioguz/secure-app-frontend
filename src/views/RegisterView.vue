@@ -141,7 +141,7 @@ const onSubmit = handleSubmit(async (values) => {
     await new Promise((resolve) => setTimeout(resolve, 1000)); // 3 saniye gecikme
     const response = await auth.register(values);
     // const response = await axios.post('http://localhost:3000/auth/register', values);
-    showToast(['Kayıt başarılı! Lütfen giriş yapın.'], 'success');
+    showToast('Kayıt başarılı! Lütfen giriş yapın.', 'success');
     console.log('Kayıt başarılı:', response);
     if (response.status === 201) {
       router.push('/user/login');
