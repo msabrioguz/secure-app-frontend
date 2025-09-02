@@ -54,6 +54,12 @@ const routes = [
         component: SettingsView,
         meta: { title: 'Ayarlar', requiresAuth: true },
       },
+      {
+        path: 'upload-avatar',
+        name: 'UploadAvatar',
+        component: ProfileUpload,
+        meta: { title: 'Profil Fotoğrafı Yükle', requiresAuth: true },
+      },
     ],
   },
   {
@@ -68,12 +74,6 @@ const routes = [
         name: 'Logout',
         component: LogoutView,
         meta: { title: 'Çıkış Yap', requiresAuth: true },
-      },
-      {
-        path: 'upload-avatar',
-        name: 'UploadAvatar',
-        component: ProfileUpload,
-        meta: { title: 'Profil Fotoğrafı Yükle', requiresAuth: true },
       },
     ],
   },

@@ -1,13 +1,15 @@
 <template>
-  <div>
-    <h2>Upload Profile Picture</h2>
-    <input type="file" @change="onFileChange" />
-    <button @click="uploadFile">Upload</button>
-    <div v-if="preview">
-      <h3>Preview:</h3>
-      <img :src="preview" alt="Preview" width="150" />
+  <main class="p-6 mt-16 flex-1 overflow-y-auto dark:bg-gray-900 dark:text-white">
+    <div>
+      <h2 class="mb-2 text-lg font-bold">Upload Profile Picture</h2>
+      <input type="file" @change="onFileChange" />
+      <button @click="uploadFile" class="bg-sky-500 rounded-md px-4 py-2">Upload</button>
+      <div v-if="preview">
+        <h3>Preview:</h3>
+        <img :src="preview" alt="Preview" width="150" />
+      </div>
     </div>
-  </div>
+  </main>
 </template>
 
 <script setup lang="ts">
@@ -15,21 +17,20 @@ import { useToast } from '@/composables/useToast';
 import api from '@/plugins/axios';
 import { ref } from 'vue';
 
-
 const file = ref<File | null>(null);
 const preview = ref<string | null>(null);
 const showToast = useToast();
 
 function onFileChange(e: Event) {
   const target = e.target as HTMLInputElement;
-  if(target.files && target.files[0]){
+  if (target.files && target.files[0]) {
     file.value = target.files[0];
     preview.value = URL.createObjectURL(file.value);
   }
 }
 
 async function uploadFile() {
-  if(!file.value) return;
+  if (!file.value) return;
 
   const formData = new FormData();
   formData.append('file', file.value);
@@ -37,7 +38,7 @@ async function uploadFile() {
   try {
     const res = await api.post('/users/upload-avatar', formData, {
       headers: {
-        'Content-Type': 'multipart/form-data'
+        'Content-Type': 'multipart/form-data',
       },
     });
 
@@ -50,6 +51,4 @@ async function uploadFile() {
 }
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>
