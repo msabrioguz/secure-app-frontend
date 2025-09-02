@@ -4,6 +4,7 @@ import { defineStore } from 'pinia';
 import api from '@/plugins/axios';
 import type { GenericObject } from 'vee-validate';
 import type { AxiosResponse } from 'axios';
+import { TokenService } from '@/services/tokens.service';
 
 // User interface tanımı
 interface User {
@@ -19,12 +20,25 @@ export const useAuthStore = defineStore('auth', {
     refreshToken: string;
     user: User | null;
   } => ({
-    token: localStorage.getItem('token') || '',
-    refreshToken: localStorage.getItem('refreshToken') || '',
+    token: TokenService.getLocalAccessToken() || '',
+    refreshToken: TokenService.getLocalRefreshToken() || '',
     user: null,
   }),
 
   actions: {
+    setTokens(access: string, refresh: string) {
+      this.token = access;
+      this.refreshToken = refresh;
+      TokenService.updateLocalAccessToken(access);
+      TokenService.updateLocalRefreshToken(refresh);
+    },
+
+    clearTokens() {
+      this.token = '';
+      this.refreshToken = '';
+      TokenService.removeTokens();
+    },
+
     async login(email: string, password: string): Promise<void> {
       interface LoginResponse {
         access_token: string;
@@ -93,10 +107,9 @@ export const useAuthStore = defineStore('auth', {
           },
         )
         .then(() => {
-          this.token = '';
+          this.clearTokens();
           this.user = null;
-          localStorage.removeItem('token');
-          localStorage.removeItem('refreshToken');
+          // window.location.href = '/user/login'; // yönlendirme
         })
         .catch((err) => {
           console.error('Logout failed:', err);
