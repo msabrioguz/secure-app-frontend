@@ -53,7 +53,7 @@
         <div class="text-center justify-center mb-4">
           <div class="relative group inline-block">
             <div class="bg-gray-200 w-48 h-48 mx-auto rounded-full mb-4">
-              <a href="#">
+              <a href="/user/upload-avatar" class="block">
                 <img
                   src="https://placebeard.it/320/320"
                   alt="User Avatar"
