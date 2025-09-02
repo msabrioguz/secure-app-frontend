@@ -12,6 +12,7 @@ interface User {
   role?: string;
   birthDate?: Date;
   phoneNumber?: string;
+  profilePic?: string;
 }
 
 export const useUserStore = defineStore('user', {

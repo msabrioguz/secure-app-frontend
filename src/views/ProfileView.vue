@@ -55,7 +55,7 @@
             <div class="bg-gray-200 w-48 h-48 mx-auto rounded-full mb-4">
               <a href="/upload-avatar" class="block">
                 <img
-                  src="https://placebeard.it/320/320"
+                  :src="`http://localhost:3000${profilePicture}`"
                   alt="User Avatar"
                   class="w-48 h-48 p-2 rounded-full mx-auto"
                 />
@@ -163,6 +163,7 @@ const email = ref('');
 const role = ref('');
 const birthdate = ref('');
 const phone = ref('');
+const profilePicture = ref('');
 const showToast = useToast();
 
 userStore.fetchUser().then(() => {
@@ -172,6 +173,7 @@ userStore.fetchUser().then(() => {
     email.value = userStore.user.email;
     role.value = userStore.user.role == 'user' ? 'Kullanıcı' : 'Yönetici';
     phone.value = userStore.user.phoneNumber || '';
+    profilePicture.value = userStore.user.profilePic || '';
     birthdate.value = userStore.user.birthDate
       ? new Date(userStore.user.birthDate).toLocaleDateString('tr-TR')
       : '';
