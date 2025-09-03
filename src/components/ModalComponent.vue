@@ -1,9 +1,3 @@
-<script setup lang="ts">
-const props = defineProps({
-  show: Boolean
-})
-</script>
-
 <template>
   <Transition name="modal">
     <div v-if="show" class="modal-mask">
@@ -18,6 +12,7 @@ const props = defineProps({
 
         <div class="modal-footer">
           <slot name="footer">
+            {{ props.show }}
             <button class="modal-default-button" @click="$emit('close')">OK</button>
           </slot>
         </div>
@@ -25,6 +20,12 @@ const props = defineProps({
     </div>
   </Transition>
 </template>
+
+<script setup lang="ts">
+const props = defineProps({
+  show: Boolean
+})
+</script>
 
 <style>
 .modal-mask {

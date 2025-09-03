@@ -46,7 +46,7 @@
                     <h3>Profil Resmi Yükleyin</h3>
                   </template>
                   <template #body>
-                    <profile-upload />
+                    <profile-upload :show="showModal" @close="showModal = false" />
                   </template>
                 </modal-component>
               </Teleport>
