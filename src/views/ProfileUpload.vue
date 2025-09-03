@@ -1,12 +1,12 @@
 <template>
-  <main class="p-6 mt-16 flex-1 overflow-y-auto dark:bg-gray-900 dark:text-white">
+  <main>
     <div>
       <h2 class="mb-2 text-lg font-bold">Upload Profile Picture</h2>
       <input type="file" @change="onFileChange" />
       <button @click="uploadFile" class="bg-sky-500 rounded-md px-4 py-2">Upload</button>
       <div v-if="preview">
         <h3>Preview:</h3>
-        <img :src="preview" alt="Preview" width="150" />
+        <img :src="preview" alt="Preview" class="w-full" />
       </div>
     </div>
   </main>

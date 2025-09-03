@@ -48,7 +48,7 @@ const sidebarOpen = useSidebarStore();
 const isDark = ref(false);
 const auth = useAuthStore();
 const errored = ref(false);
-const fallbackAvatar = '/public/user.png';
+const fallbackAvatar = '/user.png';
 
 // İlk açılışta localStorage kontrolü
 onMounted(() => {

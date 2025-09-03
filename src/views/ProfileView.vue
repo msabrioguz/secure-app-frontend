@@ -37,9 +37,19 @@
         <div class="text-center justify-center mb-4">
           <div class="relative group inline-block">
             <div class="bg-gray-200 w-48 h-48 mx-auto rounded-full mb-4">
-              <a href="/upload-avatar" class="block">
-                <img :src="profilePicture" alt="User Avatar" class="w-48 h-48 p-2 rounded-full mx-auto" />
-              </a>
+              <img :src="profilePicture" alt="User Avatar" class="w-48 h-48 p-2 rounded-full mx-auto" id="show-modal"
+                @click="showModal = true" />
+              <Teleport to="body">
+                <!-- use the modal component, pass in the prop -->
+                <modal-component :show="showModal" @close="showModal = false">
+                  <template #header>
+                    <h3>Profil Resmi Yükleyin</h3>
+                  </template>
+                  <template #body>
+                    <profile-upload />
+                  </template>
+                </modal-component>
+              </Teleport>
               <div
                 class="absolute bottom-full mb-2 left-1/2 -translate-x-1/2 px-2 py-1 text-sm text-white bg-black rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap z-10">
                 Profil resmini değiştirmek için tıklayın.
@@ -99,6 +109,8 @@ import { useUserStore } from '@/stores/user';
 import flatpickr from 'flatpickr';
 import { onMounted, ref } from 'vue';
 import { useToast } from '@/composables/useToast';
+import ModalComponent from '@/components/ModalComponent.vue';
+import ProfileUpload from '@/views/ProfileUpload.vue';
 
 const userStore = useUserStore();
 const name = ref('');
@@ -109,6 +121,7 @@ const birthdate = ref('');
 const phone = ref('');
 const profilePicture = ref('');
 const showToast = useToast();
+const showModal = ref(false);
 
 userStore.fetchUser().then(() => {
   if (userStore.user) {
@@ -120,7 +133,7 @@ userStore.fetchUser().then(() => {
     if (userStore.user.profilePic)
       profilePicture.value = `http://localhost:3000${userStore.user.profilePic}`;
     else
-      profilePicture.value = '/public/user.png';
+      profilePicture.value = '/user.png';
     birthdate.value = userStore.user.birthDate
       ? new Date(userStore.user.birthDate).toLocaleDateString('tr-TR')
       : '';
