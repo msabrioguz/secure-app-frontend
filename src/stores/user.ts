@@ -2,23 +2,13 @@
 
 import { defineStore } from 'pinia';
 import api from '@/plugins/axios';
+import type { IUser } from '@/interfaces/user.interface';
 
-// User interface tanımı
-interface User {
-  id: number;
-  name: string;
-  surname: string;
-  email: string;
-  role?: string;
-  birthDate?: Date;
-  phoneNumber?: string;
-  profilePic?: string;
-}
 
 export const useUserStore = defineStore('user', {
   state: (): {
     token: string;
-    user: User | null;
+    user: IUser | null;
   } => ({
     token: localStorage.getItem('token') || '',
     user: null,
@@ -32,7 +22,7 @@ export const useUserStore = defineStore('user', {
 
     async fetchUser(): Promise<void> {
       try {
-        const res = await api.get<User>('/users/Profile');
+        const res = await api.get<IUser>('/users/Profile');
         this.user = res.data;
       } catch (error) {
         console.error('Failed to fetch user profile:', error);
@@ -40,12 +30,12 @@ export const useUserStore = defineStore('user', {
       }
     },
 
-    async updateUserProfile(updatedData: Partial<User>): Promise<void> {
+    async updateUserProfile(updatedData: Partial<IUser>): Promise<void> {
       if (!this.user) {
         throw new Error('No user is currently logged in.');
       }
       try {
-        const res = await api.patch<User>(`/users/Profile`, updatedData);
+        const res = await api.patch<IUser>(`/users/Profile`, updatedData);
         this.user = res.data;
       } catch (error) {
         console.error('Failed to update user profile:', error);

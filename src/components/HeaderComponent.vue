@@ -29,7 +29,7 @@
           <i class="fas fa-bell"></i>
         </button>
         <div class="w-8 h-8 rounded-full bg-gray-300" role="img" aria-label="User avatar">
-          <router-link to="/profile"><img :src="`http://localhost:3000${userStore.user?.profilePic}`" alt="User Avatar"
+          <router-link to="/profile"><img :src="`http://localhost:3000${auth.user?.profilePic}`" alt="User Avatar"
               class="w-full h-full rounded-full"></router-link>
         </div>
       </div>
@@ -38,13 +38,13 @@
 </template>
 
 <script setup lang="ts">
+import { useAuthStore } from '@/stores/auth';
 import { useSidebarStore } from '@/stores/sidebar';
-import { useUserStore } from '@/stores/user';
 import { ref, onMounted, watch } from 'vue';
 
 const sidebarOpen = useSidebarStore();
 const isDark = ref(false);
-const userStore = useUserStore();
+const auth = useAuthStore();
 
 // İlk açılışta localStorage kontrolü
 onMounted(() => {

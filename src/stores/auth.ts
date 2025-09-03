@@ -5,20 +5,13 @@ import api from '@/plugins/axios';
 import type { GenericObject } from 'vee-validate';
 import type { AxiosResponse } from 'axios';
 import { TokenService } from '@/services/tokens.service';
-
-// User interface tanımı
-interface User {
-  id: number;
-  name: string;
-  email: string;
-  role?: string;
-}
+import type { IUser } from '@/interfaces/user.interface';
 
 export const useAuthStore = defineStore('auth', {
   state: (): {
     token: string;
     refreshToken: string;
-    user: User | null;
+    user: IUser | null;
   } => ({
     token: TokenService.getLocalAccessToken() || '',
     refreshToken: TokenService.getLocalRefreshToken() || '',
@@ -87,12 +80,8 @@ export const useAuthStore = defineStore('auth', {
     },
 
     async fetchUser(): Promise<void> {
-      const res = await api.get('/users/me', {
-        headers: {
-          Authorization: `Bearer ${this.token}`,
-        },
-      });
-      this.user = res.data as User;
+      const res = await api.get('/users/me');
+      this.user = res.data as IUser;
     },
 
     logout(): void {
