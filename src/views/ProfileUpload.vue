@@ -15,11 +15,13 @@
 <script setup lang="ts">
 import { useToast } from '@/composables/useToast';
 import api from '@/plugins/axios';
+import { useAuthStore } from '@/stores/auth';
 import { ref } from 'vue';
 
 const file = ref<File | null>(null);
 const preview = ref<string | null>(null);
 const showToast = useToast();
+const auth = useAuthStore();
 
 function onFileChange(e: Event) {
   const target = e.target as HTMLInputElement;
@@ -43,6 +45,7 @@ async function uploadFile() {
     });
 
     console.log('Upload successful:', res.data);
+    auth.fetchUser(); // Kullanıcı bilgilerini güncelle
     showToast('Profile picture uploaded successfully', 'success');
   } catch (error) {
     console.error('Upload failed:', error);

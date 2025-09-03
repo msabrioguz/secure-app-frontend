@@ -7,7 +7,8 @@
     <div></div>
     <div class="flex items-center">
       <div class="mr-5">
-        <button id="theme-toggle" class="h-10 w-10 rounded-lg p-2 hover:bg-gray-100 dark:hover:bg-gray-700" @click="isDark = !isDark">
+        <button id="theme-toggle" class="h-10 w-10 rounded-lg p-2 hover:bg-gray-100 dark:hover:bg-gray-700"
+          @click="isDark = !isDark">
           <svg class="fill-violet-700 block dark:hidden" fill="currentColor" viewBox="0 0 20 20">
             <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
           </svg>
@@ -29,8 +30,9 @@
           <i class="fas fa-bell"></i>
         </button>
         <div class="w-8 h-8 rounded-full bg-gray-300" role="img" aria-label="User avatar">
-          <router-link to="/profile"><img :src="`http://localhost:3000${auth.user?.profilePic}`" alt="User Avatar"
-              class="w-full h-full rounded-full"></router-link>
+          <router-link to="/profile">
+            <img :src="avatarSrc" alt="User Avatar" class="w-full h-full rounded-full">
+          </router-link>
         </div>
       </div>
     </div>
@@ -40,11 +42,13 @@
 <script setup lang="ts">
 import { useAuthStore } from '@/stores/auth';
 import { useSidebarStore } from '@/stores/sidebar';
-import { ref, onMounted, watch } from 'vue';
+import { ref, onMounted, watch, computed } from 'vue';
 
 const sidebarOpen = useSidebarStore();
 const isDark = ref(false);
 const auth = useAuthStore();
+const errored = ref(false);
+const fallbackAvatar = '/public/user.png';
 
 // İlk açılışta localStorage kontrolü
 onMounted(() => {
@@ -58,6 +62,14 @@ watch(isDark, (val) => {
   document.documentElement.classList.toggle('dark', val)
   localStorage.setItem('theme', val ? 'dark' : 'light')
 })
+
+// Avatar resmi yüklenirken hata olursa fallback kullan
+const avatarSrc = computed(() => {
+  if (errored.value || !auth.user?.profilePic) {
+    return fallbackAvatar;
+  }
+  return `http://localhost:3000${auth.user.profilePic}`;
+});
 </script>
 
 <style scoped></style>

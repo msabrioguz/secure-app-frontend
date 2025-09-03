@@ -93,6 +93,7 @@ router.beforeEach((to, from, next) => {
     next({ name: 'Login' });
   } else if (to.name === 'Login' && auth.token) {
     // Zaten giriş yapılmışsa login sayfasına gitme
+    auth.fetchUser(); // Kullanıcı bilgilerini al
     next({ name: 'Dashboard' });
   } else {
     // Devam et
