@@ -6,7 +6,6 @@ import HomeView from '@/views/HomeView.vue';
 import LoginView from '@/views/LoginView.vue';
 import LogoutView from '@/views/LogoutView.vue';
 import NotesView from '@/views/NotesView.vue';
-import ProfileUpload from '@/views/ProfileUpload.vue';
 import ProfileView from '@/views/ProfileView.vue';
 import RegisterView from '@/views/RegisterView.vue';
 import SettingsView from '@/views/SettingsView.vue';
@@ -53,12 +52,6 @@ const routes = [
         name: 'Settings',
         component: SettingsView,
         meta: { title: 'Ayarlar', requiresAuth: true },
-      },
-      {
-        path: 'upload-avatar',
-        name: 'UploadAvatar',
-        component: ProfileUpload,
-        meta: { title: 'Profil Fotoğrafı Yükle', requiresAuth: true },
       },
     ],
   },
