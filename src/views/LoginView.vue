@@ -115,8 +115,6 @@ const onSubmit = handleSubmit(async (formValues) => {
   try {
     await new Promise((resolve) => setTimeout(resolve, 1000)); // 3 saniye gecikme
     await auth.login(formValues.email, formValues.password);
-    const user = auth.user;
-    console.log('Giriş başarılı:', user);
     showToast('Giriş başarılı!', 'success');
     router.push('/'); // Başarılı giriş sonrası yönlendirme
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

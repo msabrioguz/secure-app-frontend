@@ -64,7 +64,7 @@
                 <!-- use the modal component, pass in the prop -->
                 <UploadAvatarComponent :show="showModal" @close="showModal = false">
                   <template #header>
-                    <h3>Profil Resmi Yükleyin</h3>
+                    <h3>Profil Resmi Yükle</h3>
                   </template>
                   <template #body>
                     <profile-upload :show="showModal" @close="showModal = false" />
