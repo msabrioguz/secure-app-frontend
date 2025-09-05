@@ -214,7 +214,6 @@ const onSubmit = () => {
 };
 
 watch(showModal, () => {
-  console.log(showModal.value);
   userStore.fetchUser().then(() => {
      if (userStore.user?.profilePic)
       profilePicture.value = `http://localhost:3000${userStore.user.profilePic}`;

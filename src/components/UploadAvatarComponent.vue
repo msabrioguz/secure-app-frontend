@@ -12,7 +12,7 @@
             class="bg-[#42b983] text-white rounded px-4 py-2"
             @click="($refs['fileInput'] as any).click()"
           >
-            Dosya Seç
+            <i class="fa fa-image pr-2"></i> Dosya Seç
           </button>
           <div v-if="preview">
             <h3>Preview:</h3>
@@ -63,13 +63,11 @@ async function uploadFile() {
   formData.append('file', file.value);
 
   try {
-    const res = await api.post('/users/upload-avatar', formData, {
+    await api.post('/users/upload-avatar', formData, {
       headers: {
         'Content-Type': 'multipart/form-data',
       },
     });
-
-    console.log('Upload successful:', res.data);
     auth.fetchUser(); // Kullanıcı bilgilerini güncelle
     showToast('Profile picture uploaded successfully', 'success');
     preview.value = null;
