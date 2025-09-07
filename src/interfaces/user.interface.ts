@@ -7,4 +7,5 @@ export interface IUser {
   birthDate: Date;
   phoneNumber: string;
   profilePic: string;
+  createdAt: Date;
 }

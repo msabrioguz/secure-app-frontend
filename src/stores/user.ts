@@ -4,7 +4,6 @@ import { defineStore } from 'pinia';
 import api from '@/plugins/axios';
 import type { IUser } from '@/interfaces/user.interface';
 
-
 export const useUserStore = defineStore('user', {
   state: (): {
     token: string;
@@ -41,6 +40,15 @@ export const useUserStore = defineStore('user', {
         console.error('Failed to update user profile:', error);
         throw error;
       }
-    }
+    },
+
+    async getAllUsers() {
+      try {
+        const users = await api.get('/users/getAllUsers');
+        return users;
+      } catch (error) {
+        console.log(error);
+      }
+    },
   },
 });

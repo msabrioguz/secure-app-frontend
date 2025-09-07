@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useAuthStore } from '@/stores/auth';
 import authapi from './auth.axios';
 import { TokenService } from '@/services/tokens.service';
+import router from '@/router';
 // import { useRouter } from 'vue-router'
 
 // Axios örneği oluştur
@@ -63,27 +64,31 @@ api.interceptors.response.use(
       isRefreshing = true;
 
       try {
-        const res = await authapi.post('/refresh', {
-          refreshToken: TokenService.getLocalRefreshToken(),
-        });
+        if (TokenService.getLocalRefreshToken()) {
+          const res = await authapi.post('/refresh', {
+            refreshToken: TokenService.getLocalRefreshToken(),
+          });
 
-        const newAccessToken = res.data.access_token;
-        const newRefreshToken = res.data.refresh_token;
+          const newAccessToken = res.data.access_token;
+          const newRefreshToken = res.data.refresh_token;
+          TokenService.updateLocalAccessToken(newAccessToken);
+          TokenService.updateLocalRefreshToken(newRefreshToken);
+          console.log('Access token refreshed');
+          processQueue(null, newAccessToken);
+          auth.refreshTokens(newAccessToken, newRefreshToken);
 
-        TokenService.updateLocalAccessToken(newAccessToken);
-        TokenService.updateLocalRefreshToken(newRefreshToken);
-        console.log('Access token refreshed');
-        processQueue(null, newAccessToken);
-        auth.refreshTokens(newAccessToken, newRefreshToken);
+          originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
 
-        originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
-        return api(originalRequest);
+          return api(originalRequest);
+        }
       } catch (refreshError) {
         processQueue(refreshError, null);
         console.error('Refresh token expired or invalid:', refreshError);
         //refresh token de geçersiz → logout
         TokenService.removeTokens();
-        window.location.href = '/user/login'; // yönlendirme
+        if (router.currentRoute.value.path !== '/user/login') {
+          router.push('/user/login');
+        }
         return Promise.reject(refreshError);
       } finally {
         isRefreshing = false;
