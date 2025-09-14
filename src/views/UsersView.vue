@@ -31,9 +31,14 @@
     </nav>
     <div class="bg-white dark:bg-gray-800 shadow-md p-5 rounded-lg mb-6">
       <div class="flex justify-between mb-3">
-        <button class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600">
-          Kullanıcı Ekle <i class="fas fa-plus ml-2"></i>
-        </button>
+        <div class="flex items-center space-x-2">
+          <button class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600">
+            Kullanıcı Ekle <i class="fas fa-plus ml-2"></i>
+          </button>
+          <!-- Arama -->
+          <input v-model="search" @input="userStore.setSearch(search)" placeholder="Ara (isim / e-posta)"
+            class="border px-3 py-2 rounded w-full sm:w-64 text-black" />
+        </div>
         <div class="flex items-center space-x-2">
           <button class="px-4 py-2 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600">
             Düzenle <i class="fas fa-edit ml-2"></i>
@@ -43,7 +48,9 @@
           </button>
         </div>
       </div>
-      <table class="table-auto w-full">
+      <!-- Tablo -->
+      <div v-if="userStore.loading" class="text-gray-500">Yükleniyor...</div>
+      <table v-else class="table-auto w-full">
         <thead class="align-middle text-xs whitespace-nowrap p-4 font-semibold text-center uppercase">
           <!-- bg-gray-50 dark:bg-gray-600 text-gray-700 dark:text-white -->
           <tr class="bg-gray-50 dark:bg-gray-600 text-gray-700 dark:text-white">
@@ -58,23 +65,23 @@
           </tr>
         </thead>
         <tbody class="divide-y divide-gray-100 dark:divide-gray-600 text-xs">
-          <tr v-for="value in users" :key="value.id">
+          <tr v-for="user in userStore.users" :key="user.id">
             <td class="px-4 py-2">
               <input type="checkbox" class="form-checkbox text-blue-600" aria-label="Seç" />
             </td>
             <td class="px-4 py-2 text-center">
-              <img :src="value.profilePic ? 'http://localhost:3000' + value.profilePic : '/user.png'"
+              <img :src="user.profilePic ? 'http://localhost:3000' + user.profilePic : '/user.png'"
                 class="h-12 w-12 rounded-full border-2 border-gray-500 inline-block">
             </td>
-            <td class="px-4 py-2 text-center">{{ value.name }} {{ value.surname }}</td>
-            <td class="px-4 py-2 text-center text-gray-400">{{ value.email }}</td>
+            <td class="px-4 py-2 text-center">{{ user.name }} {{ user.surname }}</td>
+            <td class="px-4 py-2 text-center text-gray-400">{{ user.email }}</td>
             <td class="px-4 py-2 text-center">
-              <span :class="`${roleMap[value.role as RoleKey].class} rounded-full py-2 px-4 text-xs text-white`">
-                {{ roleMap[value.role as RoleKey].text }}
+              <span :class="`${roleMap[user.role as RoleKey].class} rounded-full py-2 px-4 text-xs text-white`">
+                {{ roleMap[user.role as RoleKey].text }}
               </span>
 
             </td>
-            <td class="px-4 py-2 text-center text-gray-400">{{ dayjs(value.createdAt).format('DD.MM.YYYY - HH:mm:ss') }}
+            <td class="px-4 py-2 text-center text-gray-400">{{ dayjs(user.createdAt).format('DD.MM.YYYY - HH:mm:ss') }}
             </td>
           </tr>
         </tbody>
@@ -85,8 +92,9 @@
       <div class="py-3 border rounded-lg dark:border-gray-600">
         <ol
           class="flex items-center text-sm text-gray-500 divide-x rtl:divide-x-reverse divide-gray-300 dark:text-gray-400 dark:divide-gray-600">
+          <!-- Prev -->
           <li>
-            <button type="button"
+            <button type="button" :disabled="userStore.page === 1" @click="userStore.setPage(userStore.page - 1)"
               class="relative flex items-center justify-center font-medium min-w-[2rem] px-1.5 h-8 -my-3 rounded-md outline-none hover:bg-gray-500/5 focus:bg-yellow-500/10 focus:ring-2 focus:ring-yellow-500 dark:hover:bg-gray-400/5 transition text-yellow-600"
               aria-label="Previous" rel="prev">
               <svg class="w-5 h-5 rtl:scale-x-[-1]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
@@ -98,64 +106,17 @@
             </button>
           </li>
 
-          <li>
-            <button type="button"
-              class="relative flex items-center justify-center font-medium min-w-[2rem] px-1.5 h-8 -my-3 rounded-md outline-none transition text-yellow-600 focus:underline bg-yellow-500/10 ring-2 ring-yellow-500">
-              <span>1</span>
+          <li v-for="p in totalPages" :key="p">
+            <button type="button" @click="userStore.setPage(p)"
+              class="relative flex items-center justify-center font-medium min-w-[2rem] px-1.5 h-8 -my-3 rounded-md outline-none"
+              :class="[userStore.page === p ? 'transition text-yellow-600 focus:underline bg-yellow-500/10 ring-2 ring-yellow-500' : 'hover:bg-gray-500/5 focus:bg-yellow-500/10 focus:ring-2 focus:ring-yellow-500 dark:hover:bg-gray-400/5 focus:text-yellow-600 transition']">
+              <span>{{ p }}</span>
             </button>
           </li>
+          <!-- Next -->
           <li>
-            <button type="button"
-              class="relative flex items-center justify-center font-medium min-w-[2rem] px-1.5 h-8 -my-3 rounded-md outline-none hover:bg-gray-500/5 focus:bg-yellow-500/10 focus:ring-2 focus:ring-yellow-500 dark:hover:bg-gray-400/5 focus:text-yellow-600 transition">
-              <span>2</span>
-            </button>
-          </li>
-          <li>
-            <button type="button"
-              class="relative flex items-center justify-center font-medium min-w-[2rem] px-1.5 h-8 -my-3 rounded-md outline-none hover:bg-gray-500/5 focus:bg-yellow-500/10 focus:ring-2 focus:ring-yellow-500 dark:hover:bg-gray-400/5 focus:text-yellow-600 transition">
-              <span>3</span>
-            </button>
-          </li>
-          <li>
-            <button type="button"
-              class="relative flex items-center justify-center font-medium min-w-[2rem] px-1.5 h-8 -my-3 rounded-md outline-none hover:bg-gray-500/5 focus:bg-yellow-500/10 focus:ring-2 focus:ring-yellow-500 dark:hover:bg-gray-400/5 focus:text-yellow-600 transition">
-              <span>4</span>
-            </button>
-          </li>
-          <li>
-            <button type="button"
-              class="relative flex items-center justify-center font-medium min-w-[2rem] px-1.5 h-8 -my-3 rounded-md outline-none hover:bg-gray-500/5 focus:bg-yellow-500/10 focus:ring-2 focus:ring-yellow-500 dark:hover:bg-gray-400/5 focus:text-yellow-600 transition">
-              <span>5</span>
-            </button>
-          </li>
-          <li>
-            <button type="button"
-              class="relative flex items-center justify-center font-medium min-w-[2rem] px-1.5 h-8 -my-3 rounded-md outline-none hover:bg-gray-500/5 focus:bg-yellow-500/10 focus:ring-2 focus:ring-yellow-500 dark:hover:bg-gray-400/5 focus:text-yellow-600 transition">
-              <span>6</span>
-            </button>
-          </li>
-          <li>
-            <button disabled type="button"
-              class="relative flex items-center justify-center font-medium min-w-[2rem] px-1.5 h-8 -my-3 rounded-md outline-none filament-tables-pagination-item-disabled cursor-not-allowed pointer-events-none opacity-70">
-              <span>...</span>
-            </button>
-          </li>
-
-          <li>
-            <button type="button"
-              class="relative flex items-center justify-center font-medium min-w-[2rem] px-1.5 h-8 -my-3 rounded-md outline-none hover:bg-gray-500/5 focus:bg-yellow-500/10 focus:ring-2 focus:ring-yellow-500 dark:hover:bg-gray-400/5 focus:text-yellow-600 transition">
-              <span>9</span>
-            </button>
-          </li>
-          <li>
-            <button type="button"
-              class="relative flex items-center justify-center font-medium min-w-[2rem] px-1.5 h-8 -my-3 rounded-md outline-none hover:bg-gray-500/5 focus:bg-yellow-500/10 focus:ring-2 focus:ring-yellow-500 dark:hover:bg-gray-400/5 focus:text-yellow-600 transition">
-              <span>10</span>
-            </button>
-          </li>
-
-          <li>
-            <button type="button"
+            <button type="button" :disabled="userStore.page >= totalPages"
+              @click="userStore.setPage(userStore.page + 1)"
               class="relative flex items-center justify-center font-medium min-w-[2rem] px-1.5 h-8 -my-3 rounded-md outline-none hover:bg-gray-500/5 focus:bg-yellow-500/10 focus:ring-2 focus:ring-yellow-500 dark:hover:bg-gray-400/5 transition text-yellow-600"
               aria-label="Next" rel="next">
               <svg class="w-5 h-5 rtl:scale-x-[-1]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
@@ -471,14 +432,13 @@
 
 <script setup lang="ts">
 import { Role } from '@/enums/role.enum';
-import type { IUser } from '@/interfaces/user.interface';
 import { useUserStore } from '@/stores/user';
 import dayjs from 'dayjs';
-import { onMounted, ref } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 
 
 const userStore = useUserStore();
-const users = ref<IUser[]>([]);
+const search = ref('');
 
 const roleMap = {
   [Role.ADMIN]: { text: 'Admin', class: 'bg-red-500' },
@@ -489,9 +449,10 @@ const roleMap = {
 type RoleKey = keyof typeof roleMap;
 
 onMounted(async () => {
-  const res = await userStore.getAllUsers();
-  users.value = res?.data;
+  await userStore.fetchUsers();
 })
+
+const totalPages = computed(() => Math.ceil(userStore.total / userStore.limit));
 </script>
 
 <style scoped></style>

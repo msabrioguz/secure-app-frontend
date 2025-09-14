@@ -8,9 +8,21 @@ export const useUserStore = defineStore('user', {
   state: (): {
     token: string;
     user: IUser | null;
+    users: IUser[];
+    total: number;
+    loading: boolean;
+    page: number;
+    limit: number;
+    search: string;
   } => ({
     token: localStorage.getItem('token') || '',
     user: null,
+    users: [],
+    total: 0,
+    loading: false,
+    limit: 1,
+    page: 1,
+    search: '',
   }),
 
   actions: {
@@ -25,7 +37,6 @@ export const useUserStore = defineStore('user', {
         this.user = res.data;
       } catch (error) {
         console.error('Failed to fetch user profile:', error);
-        this.user = null;
       }
     },
 
@@ -42,13 +53,34 @@ export const useUserStore = defineStore('user', {
       }
     },
 
-    async getAllUsers() {
+    async fetchUsers() {
+      this.loading = true;
       try {
-        const users = await api.get('/users/getAllUsers');
-        return users;
-      } catch (error) {
-        console.log(error);
+        const res = await api.get('users/GetAllUsers', {
+          params: {
+            page: this.page,
+            limit: this.limit,
+            search: this.search,
+          },
+        });
+        this.users = res.data.data;
+        this.total = res.data.total;
+      } catch (err) {
+        console.log('Failed to fetch users:', err);
+      } finally {
+        this.loading = false;
       }
+    },
+
+    setSearch(search: string) {
+      this.search = search;
+      this.page = 1;
+      this.fetchUsers();
+    },
+
+    setPage(page: number) {
+      this.page = page;
+      this.fetchUsers();
     },
   },
 });
