@@ -97,37 +97,18 @@
 
 <script setup lang="ts">
 import { useRouter } from 'vue-router';
-// import axios from 'axios';
-import * as yup from 'yup';
 import { useForm, useField } from 'vee-validate';
 import { useToast } from '@/composables/useToast';
 import { useAuthStore } from '@/stores/auth';
+import userRegisterSchema from '@/schemas/userRegister.schema';
 
 const router = useRouter();
 const showToast = useToast();
 const auth = useAuthStore();
 
-// Yup doğrulama şeması
-const schema = yup.object({
-  name: yup.string().required('İsim alanı zorunludur'),
-  surname: yup.string().required('Soyisim alanı zorunludur'),
-  email: yup
-    .string()
-    .email('Geçerli bir e-posta adresi girin')
-    .required('E-posta alanı zorunludur'),
-  password: yup
-    .string()
-    .min(6, 'Şifre en az 6 karakter olmalıdır')
-    .required('Şifre alanı zorunludur'),
-  passwordAgain: yup
-    .string()
-    .oneOf([yup.ref('password')], 'Şifreler eşleşmiyor')
-    .required('Şifre tekrar alanı zorunludur'),
-});
-
 // VeeValidation formu başlat
 const { handleSubmit, errors, isSubmitting } = useForm({
-  validationSchema: schema,
+  validationSchema: userRegisterSchema,
 });
 
 const { value: name } = useField('name');

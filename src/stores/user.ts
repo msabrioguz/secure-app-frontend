@@ -3,6 +3,7 @@
 import { defineStore } from 'pinia';
 import api from '@/plugins/axios';
 import type { IUser } from '@/interfaces/user.interface';
+import type { GenericObject } from 'vee-validate';
 
 export const useUserStore = defineStore('user', {
   state: (): {
@@ -20,7 +21,7 @@ export const useUserStore = defineStore('user', {
     users: [],
     total: 0,
     loading: false,
-    limit: 1,
+    limit: 10,
     page: 1,
     search: '',
   }),
@@ -71,16 +72,23 @@ export const useUserStore = defineStore('user', {
         this.loading = false;
       }
     },
-
+    // Arama yapılması
+    // TODO: Şuan sadece name ve email ile arama yapılıyor. surname alanıda eklenmesi gerekiyor.
     setSearch(search: string) {
       this.search = search;
       this.page = 1;
       this.fetchUsers();
     },
-
+    // Sayfanın değiştirilmesi
     setPage(page: number) {
       this.page = page;
       this.fetchUsers();
+    },
+
+    async newUser(newUserData: GenericObject) {
+      const response = await api.post('/auth/register', { ...newUserData });
+      this.fetchUsers();
+      return response;
     },
   },
 });

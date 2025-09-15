@@ -3,16 +3,15 @@
     <div v-if="show" class="modal-mask">
       <div class="modal-container">
         <div class="modal-header">
-          <slot name="header">default header</slot>
+          <slot name="header">Varsayılan Başlık</slot>
         </div>
 
         <div class="modal-body">
-          <slot name="body">default body</slot>
+          <slot name="body">Varsayılan İçerik</slot>
         </div>
 
         <div class="modal-footer">
           <slot name="footer">
-            {{ props.show }}
             <button class="modal-default-button" @click="$emit('close')">OK</button>
           </slot>
         </div>
@@ -22,6 +21,7 @@
 </template>
 
 <script setup lang="ts">
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const props = defineProps({
   show: Boolean
 })
