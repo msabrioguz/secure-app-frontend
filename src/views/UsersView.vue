@@ -37,7 +37,7 @@
             Kullanıcı Ekle <i class="fas fa-plus ml-2"></i>
           </button>
           <!-- Arama -->
-          <input v-model="search" @input="userStore.setSearch(search)" placeholder="Ara (isim / e-posta)"
+          <input v-model="search" placeholder="Ara (isim / e-posta)"
             class="border px-3 py-2 rounded w-full sm:w-64 text-black" />
         </div>
         <div class="flex items-center space-x-2">
@@ -284,7 +284,7 @@ import LoginHistory from '@/components/LoginHistory.vue';
 import { Role } from '@/enums/role.enum';
 import { useUserStore } from '@/stores/user';
 import dayjs from 'dayjs';
-import { computed, onMounted, ref } from 'vue';
+import { computed, onMounted, ref, watch } from 'vue';
 
 const userStore = useUserStore();
 const search = ref('');
@@ -301,6 +301,12 @@ type RoleKey = keyof typeof roleMap;
 onMounted(async () => {
   await userStore.fetchUsers();
 });
+
+watch(search, (val) => {
+  if (val.length >= 3 || val.length === 0) {
+    userStore.setSearch(val);
+  }
+})
 
 const totalPages = computed(() => Math.ceil(userStore.total / userStore.limit));
 </script>

@@ -1,60 +1,60 @@
 <template>
   <Transition name="modal">
-    <div v-if="props.show" class="modal-mask">
-      <div class="modal-container">
-        <div class="modal-body">
+    <div v-if="props.show" class="modal-mask fixed z-50 top-0 left-0 w-full h-full flex">
+      <div class="modal-container w-[600px] m-auto p-5 bg-white rounded shadow">
+        <div class="my-0 mx-0">
           <h2 class="text-lg font-bold mb-2">Kullanıcı Oluştur</h2>
-          <hr class="mb-4 border-gray-300 dark:border-gray-600" />
+          <hr class="mb-4 border-gray-300" />
           <form class="mb-4">
-            <label for="name" class="block text-gray-700 dark:text-gray-300 mt-4 mb-2">İsim</label>
+            <label for="name" class="block text-gray-700 mt-4 mb-2">İsim</label>
             <input
               type="text"
               id="name"
-              class="w-full p-2 border rounded dark:bg-gray-700 dark:text-white"
+              class="w-full p-2 border rounded"
               placeholder="İsim girin"
               v-model="name"
             />
             <span class="text-red-500 text-sm">{{ errors.name }}</span>
-            <label for="lastName" class="block text-gray-700 dark:text-gray-300 mt-4 mb-2"
+            <label for="lastName" class="block text-gray-700 mt-4 mb-2"
               >Soyisim</label
             >
             <input
               type="text"
               id="lastName"
-              class="w-full p-2 border rounded dark:bg-gray-700 dark:text-white"
+              class="w-full p-2 border rounded dark:text-white"
               placeholder="Soyisim girin"
               v-model="surname"
             />
             <span class="text-red-500 text-sm">{{ errors.surname }}</span>
-            <label for="email" class="block text-gray-700 dark:text-gray-300 mt-4 mb-2"
+            <label for="email" class="block text-gray-700 mt-4 mb-2"
               >E-Posta</label
             >
             <input
               type="text"
               id="email"
-              class="w-full p-2 border rounded dark:bg-gray-700 dark:text-white"
+              class="w-full p-2 border rounded"
               placeholder="email@eposta.com"
               v-model="email"
             />
             <span class="text-red-500 text-sm">{{ errors.email }}</span>
-            <label for="password" class="block text-gray-700 dark:text-gray-300 mt-4 mb-2"
+            <label for="password" class="block text-gray-700 mt-4 mb-2"
               >Parola</label
             >
             <input
               type="password"
               id="password"
-              class="w-full p-2 border rounded dark:bg-gray-700 dark:text-white"
+              class="w-full p-2 border rounded"
               placeholder="Parola girin"
               v-model="password"
             />
             <span class="text-red-500 text-sm">{{ errors.password }}</span>
-            <label for="passwordAgain" class="block text-gray-700 dark:text-gray-300 mt-4 mb-2"
+            <label for="passwordAgain" class="block text-gray-700 mt-4 mb-2"
               >Parola Tekrarı</label
             >
             <input
               type="password"
               id="passwordAgain"
-              class="w-full p-2 border rounded dark:bg-gray-700 dark:text-white"
+              class="w-full p-2 border rounded"
               placeholder="Parola tekrarı girin"
               v-model="passwordAgain"
             />
@@ -140,40 +140,14 @@ const onSubmit = handleSubmit(async (values) => {
 });
 </script>
 
-<style>
+<style scoped>
 .modal-mask {
-  position: fixed;
-  z-index: 9998;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
   background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
   transition: opacity 0.3s ease;
 }
 
 .modal-container {
-  width: 600px;
-  margin: auto;
-  padding: 20px 30px;
-  background-color: #fff;
-  border-radius: 2px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);
   transition: all 0.3s ease;
-}
-
-.modal-header h3 {
-  margin-top: 0;
-  color: #42b983;
-}
-
-.modal-body {
-  margin: 20px 0;
-}
-
-.modal-default-button {
-  float: right;
 }
 
 /*

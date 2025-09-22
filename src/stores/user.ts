@@ -73,7 +73,6 @@ export const useUserStore = defineStore('user', {
       }
     },
     // Arama yapılması
-    // TODO: Şuan sadece name ve email ile arama yapılıyor. surname alanıda eklenmesi gerekiyor.
     setSearch(search: string) {
       this.search = search;
       this.page = 1;

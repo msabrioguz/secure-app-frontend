@@ -58,12 +58,13 @@ import { useLoginAttemptsStore } from '@/stores/loginAttempts';
 import { onMounted } from 'vue';
 import dayjs from 'dayjs';
 import { Role } from '@/enums/role.enum';
+import { storeToRefs } from 'pinia';
 
 const loginHistoryStore = useLoginAttemptsStore();
-onMounted(async () => {
-  await loginHistoryStore.fecthAttempts();
+onMounted(() => {
+  loginHistoryStore.fecthAttempts();
 });
-const attempts = loginHistoryStore.attempts;
+const { attempts } = storeToRefs(loginHistoryStore);
 
 const roleMap = {
   [Role.ADMIN]: { text: 'Admin', class: 'bg-red-500' },
