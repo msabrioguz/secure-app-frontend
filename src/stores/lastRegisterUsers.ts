@@ -1,10 +1,10 @@
+import type { IUser } from '@/interfaces/user.interface';
 import api from '@/plugins/axios';
 import { defineStore } from 'pinia';
 
 export const useLastRegisterUsers = defineStore('lastRegisterUsers', {
   state: () => ({
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    lastUsers: [] as any[],
+    lastUsers: [] as IUser[],
   }),
   actions: {
     async fecthAttempts() {
