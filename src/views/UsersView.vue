@@ -143,143 +143,14 @@
     </Teleport>
     <div class="grid gap-6 mt-6">
       <LoginHistory />
-      <div class="bg-white dark:bg-gray-800 shadow-md p-5 rounded-lg">
-        <h3 class="mb-5">En Son Üye Olanlar</h3>
-        <table class="items-center w-full bg-transparent border-collapse">
-          <thead>
-            <tr>
-              <th
-                class="px-4 bg-gray-50 dark:bg-gray-600 text-gray-700 dark:text-white align-middle py-3 text-xs font-semibold text-center uppercase border-l-0 border-r-0 whitespace-nowrap min-w-140-px">
-                Profil
-              </th>
-              <th
-                class="px-4 bg-gray-50 dark:bg-gray-600 text-gray-700 dark:text-white align-middle py-3 text-xs font-semibold text-left uppercase border-l-0 border-r-0 whitespace-nowrap">
-                Kullanıcı Adı
-              </th>
-              <th
-                class="px-4 bg-gray-50 dark:bg-gray-600 text-gray-700 dark:text-white align-middle py-3 text-xs font-semibold text-left uppercase border-l-0 border-r-0 whitespace-nowrap">
-                Rolü
-              </th>
-              <th
-                class="px-4 bg-gray-50 dark:bg-gray-600 text-gray-700 dark:text-white align-middle py-3 text-xs font-semibold text-left uppercase border-l-0 border-r-0 whitespace-nowrap">
-                İşlem Zamanı
-              </th>
-              <th
-                class="px-4 bg-gray-50 dark:bg-gray-600 text-gray-700 dark:text-white align-middle py-3 text-xs font-semibold text-left uppercase border-l-0 border-r-0 whitespace-nowrap">
-                Durum
-              </th>
-            </tr>
-          </thead>
-          <tbody class="divide-y divide-gray-100 dark:divide-gray-600">
-            <tr class="text-gray-500 dark:text-gray-400">
-              <td class="border-t-0 align-middle text-sm font-normal whitespace-nowrap p-4 text-center">
-                <image src="https://placebeard.it/320/320"
-                  class="h-10 w-10 rounded-full border-2 border-gray-500 inline-block">
-                </image>
-              </td>
-              <td class="border-t-0 align-middle text-xs font-medium whitespace-nowrap p-4">
-                <a href="#">mustafa.oguz</a>
-              </td>
-              <td
-                class="border-t-0 align-middle text-xs font-medium text-gray-900 dark:text-white whitespace-nowrap p-4">
-                <span class="bg-red-500 rounded-full py-2 px-4 text-xs text-white">Admin</span>
-              </td>
-              <td class="border-t-0 align-middle text-xs whitespace-nowrap p-4">
-                20.07.2025 - 09:47:12
-              </td>
-              <td class="border-t-0 align-middle text-xs whitespace-nowrap p-4">
-                <span class="text-green-600">Aktif</span>
-              </td>
-            </tr>
-            <tr class="text-gray-500 dark:text-gray-400">
-              <td class="border-t-0 align-middle text-sm font-normal whitespace-nowrap p-4 text-center">
-                <image src="https://placebeard.it/320/320"
-                  class="h-10 w-10 rounded-full border-2 border-gray-500 inline-block">
-                </image>
-              </td>
-              <td class="border-t-0 align-middle text-xs font-medium whitespace-nowrap p-4">
-                <a href="#">yasin.cihan</a>
-              </td>
-              <td
-                class="border-t-0 align-middle text-xs font-medium text-gray-900 dark:text-white whitespace-nowrap p-4">
-                <span class="bg-yellow-500 rounded-full py-2 px-4 text-xs text-white">Moderatör</span>
-              </td>
-              <td class="border-t-0 align-middle text-xs whitespace-nowrap p-4">
-                20.07.2025 - 09:47:12
-              </td>
-              <td class="border-t-0 align-middle text-xs whitespace-nowrap p-4">
-                <span class="text-red-600">Admin Onayı</span>
-              </td>
-            </tr>
-            <tr class="text-gray-500 dark:text-gray-400">
-              <td class="border-t-0 align-middle text-sm font-normal whitespace-nowrap p-4 text-center">
-                <image src="https://placebeard.it/320/320"
-                  class="h-10 w-10 rounded-full border-2 border-gray-500 inline-block">
-                </image>
-              </td>
-              <td class="border-t-0 align-middle text-xs font-medium whitespace-nowrap p-4">
-                <a href="#">ali.veli</a>
-              </td>
-              <td
-                class="border-t-0 align-middle text-xs font-medium text-gray-900 dark:text-white whitespace-nowrap p-4">
-                <span class="bg-green-500 rounded-full py-2 px-4 text-xs text-white">Üye</span>
-              </td>
-              <td class="border-t-0 align-middle text-xs whitespace-nowrap p-4">
-                20.07.2025 - 09:47:12
-              </td>
-              <td class="border-t-0 align-middle text-xs whitespace-nowrap p-4">
-                <span class="text-green-600">Aktif</span>
-              </td>
-            </tr>
-            <tr class="text-gray-500 dark:text-gray-400">
-              <td class="border-t-0 align-middle text-sm font-normal whitespace-nowrap p-4 text-center">
-                <image src="https://placebeard.it/320/320"
-                  class="h-10 w-10 rounded-full border-2 border-gray-500 inline-block">
-                </image>
-              </td>
-              <td class="border-t-0 align-middle text-xs font-medium whitespace-nowrap p-4">
-                <a href="#">ali.veli</a>
-              </td>
-              <td
-                class="border-t-0 align-middle text-xs font-medium text-gray-900 dark:text-white whitespace-nowrap p-4">
-                <span class="bg-green-500 rounded-full py-2 px-4 text-xs text-white">Üye</span>
-              </td>
-              <td class="border-t-0 align-middle text-xs whitespace-nowrap p-4">
-                20.07.2025 - 09:47:12
-              </td>
-              <td class="border-t-0 align-middle text-xs whitespace-nowrap p-4">
-                <span class="text-yellow-600">E-Posta Onayı</span>
-              </td>
-            </tr>
-            <tr class="text-gray-500 dark:text-gray-400">
-              <td class="border-t-0 align-middle text-sm font-normal whitespace-nowrap p-4 text-center">
-                <image src="https://placebeard.it/320/320"
-                  class="h-10 w-10 rounded-full border-2 border-gray-500 inline-block">
-                </image>
-              </td>
-              <td class="border-t-0 align-middle text-xs font-medium whitespace-nowrap p-4">
-                <a href="#">ali.veli</a>
-              </td>
-              <td
-                class="border-t-0 align-middle text-xs font-medium text-gray-900 dark:text-white whitespace-nowrap p-4">
-                <span class="bg-green-500 rounded-full py-2 px-4 text-xs text-white">Üye</span>
-              </td>
-              <td class="border-t-0 align-middle text-xs whitespace-nowrap p-4">
-                20.07.2025 - 09:47:12
-              </td>
-              <td class="border-t-0 align-middle text-xs whitespace-nowrap p-4">
-                <span class="text-yellow-600">E-Posta Onayı</span>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+      <LastRegisterUsers />
     </div>
   </main>
 </template>
 
 <script setup lang="ts">
 import CreateUserModelComponent from '@/components/CreateUserModelComponent.vue';
+import LastRegisterUsers from '@/components/LastRegisterUsers.vue';
 import LoginHistory from '@/components/LoginHistory.vue';
 import { Role } from '@/enums/role.enum';
 import { useUserStore } from '@/stores/user';
