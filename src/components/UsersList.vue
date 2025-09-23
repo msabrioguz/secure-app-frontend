@@ -32,7 +32,12 @@
         <!-- bg-gray-50 dark:bg-gray-600 text-gray-700 dark:text-white -->
         <tr class="bg-gray-50 dark:bg-gray-600 text-gray-700 dark:text-white">
           <th class="px-4 py-3 w-10">
-            <input type="checkbox" class="form-checkbox text-blue-600" aria-label="Seç" />
+            <input
+              type="checkbox"
+              class="form-checkbox text-blue-600"
+              aria-label="Tümünü Seç"
+              v-model="allSelected"
+            />
           </th>
           <th class="px-4 py-3">Profil</th>
           <th class="px-4 py-3">Adı Soyadı</th>
@@ -44,7 +49,13 @@
       <tbody class="divide-y divide-gray-100 dark:divide-gray-600 text-xs">
         <tr v-for="user in userStore.users" :key="user.id">
           <td class="px-4 py-2">
-            <input type="checkbox" class="form-checkbox text-blue-600" aria-label="Seç" />
+            <input
+              type="checkbox"
+              class="form-checkbox text-blue-600"
+              aria-label="Seç"
+              v-model="selectedIds"
+              :value="user.id"
+            />
           </td>
           <td class="px-4 py-2 text-center">
             <img
@@ -55,10 +66,8 @@
           <td class="px-4 py-2 text-center">{{ user.name }} {{ user.surname }}</td>
           <td class="px-4 py-2 text-center text-gray-400">{{ user.email }}</td>
           <td class="px-4 py-2 text-center">
-            <span
-              :class="`${roleMap[user.role as RoleKey].class} rounded-full py-2 px-4 text-xs text-white`"
-            >
-              {{ roleMap[user.role as RoleKey].text }}
+            <span :class="`${roleMap[user.role].class} rounded-full py-2 px-4 text-xs text-white`">
+              {{ roleMap[user.role].text }}
             </span>
           </td>
           <td class="px-4 py-2 text-center text-gray-400">
@@ -150,7 +159,7 @@
 </template>
 
 <script setup lang="ts">
-import { Role } from '@/enums/role.enum';
+import { roleMap } from '@/constants/map';
 import { useUserStore } from '@/stores/user';
 import dayjs from 'dayjs';
 import { computed, onMounted, ref, watch } from 'vue';
@@ -159,14 +168,25 @@ import CreateUserModelComponent from './CreateUserModelComponent.vue';
 const userStore = useUserStore();
 const search = ref('');
 const showModal = ref(false);
+const selectedIds = ref<number[]>([]);
 
-const roleMap = {
-  [Role.ADMIN]: { text: 'Admin', class: 'bg-red-500' },
-  [Role.MODERATOR]: { text: 'Moderatör', class: 'bg-yellow-500' },
-  [Role.USER]: { text: 'Normal', class: 'bg-green-500' },
-} as const;
-
-type RoleKey = keyof typeof roleMap;
+const allSelected = computed({
+  get: () => {
+    console.log(selectedIds);
+    return userStore.users.length > 0 && selectedIds.value.length === userStore.users.length;
+  },
+  set: (val: boolean) => {
+    if (val) {
+      // Tüm kullanıcı idlerini seçer
+      selectedIds.value = userStore.users.map((u) => u.id);
+      console.log(selectedIds);
+    } else {
+      // Seçimi temizlemek için
+      selectedIds.value = [];
+      console.log(selectedIds);
+    }
+  },
+});
 
 onMounted(async () => {
   await userStore.fetchUsers();

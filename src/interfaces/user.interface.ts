@@ -2,7 +2,7 @@ import type { Role } from "@/enums/role.enum";
 import type { UserStatus } from "@/enums/userStatus.enum";
 
 export interface IUser {
-  id?: number;
+  id: number;
   name: string;
   surname: string;
   email: string;
