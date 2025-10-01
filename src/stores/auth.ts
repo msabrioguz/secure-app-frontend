@@ -42,6 +42,7 @@ export const useAuthStore = defineStore('auth', {
         password,
       });
       this.token = res.data.access_token;
+      this.refreshToken = res.data.refresh_token;
       localStorage.setItem('token', this.token);
       localStorage.setItem('refreshToken', res.data.refresh_token);
 
@@ -84,16 +85,11 @@ export const useAuthStore = defineStore('auth', {
       this.user = res.data as IUser;
     },
 
-    logout(): void {
-      api
+    async logout(): Promise<void> {
+      await api
         .post(
           '/auth/logout',
-          {},
-          {
-            headers: {
-              Authorization: `Bearer ${this.token}`,
-            },
-          },
+          { id: this.user?.id, refreshToken: this.refreshToken},
         )
         .then(() => {
           this.clearTokens();
