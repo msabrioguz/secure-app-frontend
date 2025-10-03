@@ -89,5 +89,11 @@ export const useUserStore = defineStore('user', {
       this.fetchUsers();
       return response;
     },
+
+    async delete(ids: Array<number>) {
+      console.log("Gelen değerler", ids);
+      const response = await api.delete('/users', { data: { ids } });
+      console.log(response);
+    },
   },
 });

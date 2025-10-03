@@ -57,8 +57,9 @@
             {{ dayjs(attempt.createdAt).format('DD.MM.YYYY - HH:mm:ss') }}
           </td>
           <td class="border-t-0 align-middle text-xs whitespace-nowrap p-4">
-            <span class="text-green-600" v-if="attempt.success">Başarılı</span>
-            <span class="text-red-600" v-else>Hatalı</span>
+            <span class="text-green-600" v-if="attempt.status === UserLogon.LOGIN">Giriş Yaptı</span>
+            <span class="text-blue-600" v-else-if="attempt.status === UserLogon.LOGOUT">Çıkış yaptı</span>
+            <span class="text-red-600" v-else>Hatalı Deneme</span>
           </td>
         </tr>
       </tbody>
@@ -67,17 +68,18 @@
 </template>
 
 <script setup lang="ts">
-import { useLoginAttemptsStore } from '@/stores/loginAttempts';
+import { useAuthHistoryStore } from '@/stores/authHistory';
 import { onMounted } from 'vue';
 import dayjs from 'dayjs';
 import { roleMap } from '@/constants/map';
 import { storeToRefs } from 'pinia';
+import { UserLogon } from '@/enums/logonStatus.enum';
 
-const loginHistoryStore = useLoginAttemptsStore();
+const authHistoryStore = useAuthHistoryStore();
 onMounted(() => {
-  loginHistoryStore.fecthAttempts();
+  authHistoryStore.fecthAttempts();
 });
-const { attempts } = storeToRefs(loginHistoryStore);
+const { attempts } = storeToRefs(authHistoryStore);
 </script>
 
 <style scoped></style>

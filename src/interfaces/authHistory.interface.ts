@@ -1,9 +1,10 @@
+import type { UserLogon } from "@/enums/logonStatus.enum";
 import type { IUser } from "./user.interface";
 
-export interface ILogonHistory {
+export interface IAuthHistory {
   id: number,
   email: string,
-  success: boolean,
+  status: UserLogon,
   ipadress: string,
   userAgent: string,
   createdAt: Date,

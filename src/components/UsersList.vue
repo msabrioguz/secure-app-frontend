@@ -20,7 +20,10 @@
         <button class="px-4 py-2 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600">
           Düzenle <i class="fas fa-edit ml-2"></i>
         </button>
-        <button class="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600">
+        <button
+          class="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600"
+          @click="deleteSelected"
+        >
           Sil <i class="fas fa-trash ml-2"></i>
         </button>
       </div>
@@ -172,18 +175,15 @@ const selectedIds = ref<number[]>([]);
 
 const allSelected = computed({
   get: () => {
-    console.log(selectedIds);
     return userStore.users.length > 0 && selectedIds.value.length === userStore.users.length;
   },
   set: (val: boolean) => {
     if (val) {
       // Tüm kullanıcı idlerini seçer
       selectedIds.value = userStore.users.map((u) => u.id);
-      console.log(selectedIds);
     } else {
       // Seçimi temizlemek için
       selectedIds.value = [];
-      console.log(selectedIds);
     }
   },
 });
@@ -199,6 +199,16 @@ watch(search, (val) => {
 });
 
 const totalPages = computed(() => Math.ceil(userStore.total / userStore.limit));
+
+// TODO: Listeden silinmesine siliniyor. Fakat silinen veri sayısı sayfa sayısını düşürdüğünde sayfa sayısı güncellenmiyor.
+// Doğal olarak ikinci sayfa verileri gözükmüyor. Tablonun yeniden yüklenmesi sağlanmalı.
+const deleteSelected = async () => {
+  if (selectedIds.value.length === 0) return;
+
+  userStore.delete(selectedIds.value);
+  userStore.users = userStore.users.filter((u) => !selectedIds.value.includes(u.id));
+  selectedIds.value = [];
+};
 </script>
 
 <style scoped></style>
